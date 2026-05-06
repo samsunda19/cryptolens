@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CryptoLens - Kripto Fırsat Tarayıcısı</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    color: #e4e4e7;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  header { text-align: center; padding: 40px 20px; }
+  h1 {
+    font-size: 3em;
+    background: linear-gradient(90deg, #00d4ff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .subtitle { color: #a1a1aa; font-size: 1.1em; }
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin: 40px 0;
+  }
+  .filter-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .filter-card:hover {
+    transform: translateY(-3px);
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+  }
+  .filter-card.active {
+    background: rgba(0, 212, 255, 0.15);
+    border-color: #00d4ff;
+  }
+  .filter-icon { font-size: 2em; margin-bottom: 10px; }
+  .filter-title { font-weight: 600; margin-bottom: 5px; }
+  .filter-desc { font-size: 0.85em; color: #a1a1aa; }
+  .results {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 25px;
+    min-height: 200px;
+  }
+  .results h2 { margin-bottom: 20px; color: #00d4ff; }
+  .loading { text-align: center; padding: 40px; color: #a1a1aa; }
+  .token-list { display: grid; gap: 10px; }
+  .token-row {
+    display: grid;
+    grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .token-row:hover { background: rgba(255, 255, 255, 0.07); }
+  .token-row img { width: 32px; height: 32px; border-radius: 50%; }
+  .token-name { font-weight: 600; }
+  .token-symbol { color: #a1a1aa; font-size: 0.85em; text-transform: uppercase; }
+  .price { font-family: monospace; }
+  .change-positive { color: #00ff88; }
+  .change-negative { color: #ff4466; }
+  .header-row {
+    display: grid;
+    grid-template-columns: 50px 2fr 1fr 1fr 1fr;
+    padding: 12px;
+    color: #a1a1aa;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+  }
+  .empty { text-align: center; padding: 60px 20px; color: #a1a1aa; }
+  footer { text-align: center; padding: 30px; color: #71717a; font-size: 0.85em; }
+  @media (max-width: 600px) {
+    h1 { font-size: 2em; }
+    .token-row, .header-row { grid-template-columns: 40px 1.5fr 1fr 1fr; }
+    .hide-mobile { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🔍 CryptoLens</h1>
+    <p class="subtitle">Kripto fırsatlarını filtrele, kazanan tokenları bul</p>
+  </header>
+
+  <div class="filters">
+    <div class="filter-card" data-filter="pumping" onclick="selectFilter(this)">
+      <div class="filter-icon">🚀</div>
+      <div class="filter-title">Yükselenler</div>
+      <div class="filter-desc">Son 7 günde %30+ artan tokenlar</div>
+    </div>
+    <div class="filter-card" data-filter="volume" onclick="selectFilter(this)">
+      <div class="filter-icon">📊</div>
+      <div class="filter-title">Hacim Patlaması</div>
+      <div class="filter-desc">24s hacmi market cap'in %30+'i</div>
+    </div>
+    <div class="filter-card" data-filter="oversold" onclick="selectFilter(this)">
+      <div class="filter-icon">🔄</div>
+      <div class="filter-title">Düşüşten Dönüş</div>
+      <div class="filter-desc">7g düşmüş ama 24s yükselişe geçmiş</div>
+    </div>
+    <div class="filter-card" data-filter="midcap" onclick="selectFilter(this)">
+      <div class="filter-icon">💎</div>
+      <div class="filter-title">Mid-Cap Gemler</div>
+      <div class="filter-desc">10M - 500M arası market cap</div>
+    </div>
+    <div class="filter-card" data-filter="whales" onclick="selectFilter(this)">
+      <div class="filter-icon">🐋</div>
+      <div class="filter-title">Whale İlgisi</div>
+      <div class="filter-desc">Yüksek hacim/market cap oranı</div>
+    </div>
+  </div>
+
+  <div class="results">
+    <h2 id="resultTitle">Bir filtre seç</h2>
+    <div id="resultContent">
+      <div class="empty">👆 Yukarıdan bir filtre seçerek başla</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>⚠️ Yatırım tavsiyesi değildir. Kendi araştırmanı yap (DYOR).</p>
+    <p>Veriler: CoinGecko API • CryptoLens v1.0</p>
+  </footer>
+</div>
+
+<script>
+let allCoins = [];
+let activeFilter = null;
+
+async function fetchCoins() {
+  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&price_change_percentage=24h,7d';
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('API hatası');
+  return await response.json();
+}
+
+async function selectFilter(card) {
+  document.querySelectorAll('.filter-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  activeFilter = card.dataset.filter;
+
+  const titleMap = {
+    pumping: '🚀 Son 7 Günde %30+ Yükselen Tokenlar',
+    volume: '📊 Hacim Patlaması Yaşayan Tokenlar',
+    oversold: '🔄 Düşüşten Dönüşe Geçen Tokenlar',
+    midcap: '💎 Mid-Cap Gem Adayları',
+    whales: '🐋 Whale İlgisi Yüksek Tokenlar'
+  };
+
+  document.getElementById('resultTitle').textContent = titleMap[activeFilter];
+  document.getElementById('resultContent').innerHTML = '<div class="loading">⏳ Veriler yükleniyor...</div>';
+
+  try {
+    if (allCoins.length === 0) allCoins = await fetchCoins();
+    const filtered = applyFilter(allCoins, activeFilter);
+    renderTokens(filtered);
+  } catch (e) {
+    document.getElementById('resultContent').innerHTML =
+      '<div class="empty">⚠️ Veri çekilemedi. Birkaç saniye sonra tekrar dene.</div>';
+  }
+}
+
+function applyFilter(coins, filter) {
+  switch(filter) {
+    case 'pumping':
+      return coins
+        .filter(c => c.price_change_percentage_7d_in_currency > 30)
+        .sort((a,b) => b.price_change_percentage_7d_in_currency - a.price_change_percentage_7d_in_currency);
+    case 'volume':
+      return coins
+        .filter(c => c.total_volume / c.market_cap > 0.3)
+        .sort((a,b) => (b.total_volume/b.market_cap) - (a.total_volume/a.market_cap));
+    case 'oversold':
+      return coins
+        .filter(c => c.price_change_percentage_7d_in_currency < -10
+                  && c.price_change_percentage_24h > 3)
+        .sort((a,b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+    case 'midcap':
+      return coins
+        .filter(c => c.market_cap >= 10000000 && c.market_cap <= 500000000)
+        .sort((a,b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+    case 'whales':
+      return coins
+        .filter(c => c.total_volume / c.market_cap > 0.5 && c.market_cap > 50000000)
+        .sort((a,b) => (b.total_volume/b.market_cap) - (a.total_volume/a.market_cap));
+    default: return [];
+  }
+}
+
+function formatPrice(p) {
+  if (p < 0.01) return '$' + p.toFixed(6);
+  if (p < 1) return '$' + p.toFixed(4);
+  return '$' + p.toLocaleString('en-US', {maximumFractionDigits: 2});
+}
+
+function formatMarketCap(m) {
+  if (m >= 1e9) return '$' + (m/1e9).toFixed(2) + 'B';
+  if (m >= 1e6) return '$' + (m/1e6).toFixed(2) + 'M';
+  return '$' + m.toLocaleString();
+}
+
+function renderTokens(tokens) {
+  if (tokens.length === 0) {
+    document.getElementById('resultContent').innerHTML =
+      '<div class="empty">😴 Şu an bu kritere uyan token yok. Başka bir filtre dene.</div>';
+    return;
+  }
+
+  let html = `
+    <div class="header-row">
+      <div>#</div>
+      <div>Token</div>
+      <div>Fiyat</div>
+      <div class="hide-mobile">M.Cap</div>
+      <div>Değişim</div>
+    </div>
+    <div class="token-list">
+  `;
+
+  tokens.slice(0, 30).forEach((t, i) => {
+    const change = activeFilter === 'pumping' ? t.price_change_percentage_7d_in_currency : t.price_change_percentage_24h;
+    const changeClass = change >= 0 ? 'change-positive' : 'change-negative';
+    const changeLabel = activeFilter === 'pumping' ? '7g' : '24s';
+
+    html += `
+      <div class="token-row">
+        <img src="${t.image}" alt="${t.symbol}" onerror="this.style.display='none'">
+        <div>
+          <div class="token-name">${t.name}</div>
+          <div class="token-symbol">${t.symbol}</div>
+        </div>
+        <div class="price">${formatPrice(t.current_price)}</div>
+        <div class="price hide-mobile">${formatMarketCap(t.market_cap)}</div>
+        <div class="${changeClass}">${changeLabel}: ${change?.toFixed(1)}%</div>
+      </div>
+    `;
+  });
+
+  html += '</div>';
+  document.getElementById('resultContent').innerHTML = html;
+}
+</script>
+</body>
+</html>
