@@ -59,6 +59,9 @@
     font-size: 0.7em; font-weight: 600;
     color: #c084fc; margin-left: 8px;
   }
+  .powered-badge video {
+    width: 18px; height: 18px; border-radius: 4px; object-fit: cover;
+  }
   .lang-switch {
     display: flex; background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
@@ -108,11 +111,20 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 1.8em; font-weight: 800; color: white;
     animation: float 4s ease-in-out infinite;
+    overflow: hidden;
+  }
+  .dex-icon video {
+    width: 100%; height: 100%; object-fit: cover;
   }
   .dex-icon.grvt { background: linear-gradient(135deg, #ff006e, #8338ec); animation-delay: 0s; }
   .dex-icon.hl { background: linear-gradient(135deg, #50d2c1, #066a78); animation-delay: 0.5s; }
   .dex-icon.var { background: linear-gradient(135deg, #f9d423, #ff4e50); animation-delay: 1s; }
-  .dex-icon.vdex { background: linear-gradient(135deg, #8338ec, #3a0ca3); animation-delay: 1.5s; box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
+  .dex-icon.vdex {
+    background: linear-gradient(135deg, #1a0a2e, #3a0ca3);
+    animation-delay: 1.5s;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+    padding: 0;
+  }
   .dex-icon.lighter { background: linear-gradient(135deg, #fa709a, #fee140); animation-delay: 2s; }
   .dex-icon.dydx { background: linear-gradient(135deg, #6966ff, #2b2d72); animation-delay: 2.5s; }
   .dex-icon.gmx { background: linear-gradient(135deg, #2d4ff7, #03d8f3); animation-delay: 3s; }
@@ -158,6 +170,15 @@
   .card-icon {
     font-size: 2.8em; margin-bottom: 18px; display: inline-block;
     animation: bob 3s ease-in-out infinite;
+  }
+  .card-icon-video {
+    width: 80px; height: 80px; margin-bottom: 18px;
+    border-radius: 16px; overflow: hidden;
+    animation: bob 3s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+  }
+  .card-icon-video video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
   }
   @keyframes bob {
     0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -221,6 +242,10 @@
   }
   .footer-powered {
     color: #c084fc; font-weight: 600; margin-top: 6px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .footer-powered video {
+    width: 24px; height: 24px; border-radius: 4px; object-fit: cover;
   }
   @media (max-width: 600px) {
     header { padding: 20px; }
@@ -228,6 +253,7 @@
     .nav-card { padding: 28px 24px; }
     .dex-item { min-width: 130px; padding: 15px 20px; }
     .dex-icon { width: 48px; height: 48px; font-size: 1.4em; }
+    .card-icon-video { width: 64px; height: 64px; }
   }
 </style>
 </head>
@@ -239,7 +265,10 @@
   <div class="logo">
     <span class="logo-icon">🔍</span>
     <span class="logo-text">CryptoLens</span>
-    <span class="powered-badge">⚡ Powered by VDEX</span>
+    <span class="powered-badge">
+      <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+      Powered by VDEX
+    </span>
   </div>
   <div class="lang-switch">
     <button class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
@@ -271,7 +300,9 @@
 
     <a href="vdex.html" class="nav-card active vdex-card" onmousemove="moveLight(event, this)">
       <span class="badge partner" data-key="badge_partner">PARTNER • CANLI</span>
-      <div class="card-icon">⚡</div>
+      <div class="card-icon-video">
+        <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+      </div>
       <h2 class="card-title" data-key="card2_title">VDEX Verileri</h2>
       <p class="card-desc" data-key="card2_desc">VDEX trading pair'leri, leaderboard, yarışmalar, duyurular ve VMM performansı — anlık veriler.</p>
       <span class="card-cta">
@@ -321,8 +352,11 @@
 
 <footer>
   <p data-key="disclaimer">⚠️ Yatırım tavsiyesi değildir. Kendi araştırmanı yap (DYOR).</p>
-  <p class="footer-powered">⚡ Powered by VDEX • Verileri: CoinGecko + VDEX API</p>
-  <p style="margin-top: 8px;">CryptoLens v3.0 • Made with 💜</p>
+  <p class="footer-powered">
+    <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+    Powered by VDEX • CoinGecko + VDEX API
+  </p>
+  <p style="margin-top: 8px;">CryptoLens v3.1 • Made with 💜</p>
 </footer>
 
 <script>
@@ -372,7 +406,7 @@ const I18N = {
 };
 
 const DEXES = [
-  { name: "VDEX", tag: "Partner", short: "V", cls: "vdex", featured: true },
+  { name: "VDEX", tag: "Partner", short: "V", cls: "vdex", featured: true, video: true },
   { name: "Hyperliquid", tag: "Perp DEX", short: "HL", cls: "hl" },
   { name: "GRVT", tag: "Self-Custody", short: "G", cls: "grvt" },
   { name: "Variational", tag: "Derivatives", short: "Va", cls: "var" },
@@ -411,13 +445,18 @@ function moveLight(e, el) {
 
 function buildDexes() {
   const track = document.getElementById('dexTrack');
-  const html = [...DEXES, ...DEXES].map(d => `
-    <div class="dex-item ${d.featured ? 'featured' : ''}">
-      <div class="dex-icon ${d.cls}">${d.short}</div>
-      <div class="dex-name">${d.name}</div>
-      <div class="dex-tag">${d.tag}</div>
-    </div>
-  `).join('');
+  const html = [...DEXES, ...DEXES].map(d => {
+    const iconContent = d.video
+      ? `<video src="vdex-logo.mp4" autoplay loop muted playsinline></video>`
+      : d.short;
+    return `
+      <div class="dex-item ${d.featured ? 'featured' : ''}">
+        <div class="dex-icon ${d.cls}">${iconContent}</div>
+        <div class="dex-name">${d.name}</div>
+        <div class="dex-tag">${d.tag}</div>
+      </div>
+    `;
+  }).join('');
   track.innerHTML = html;
 }
 
