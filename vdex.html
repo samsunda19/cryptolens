@@ -32,13 +32,6 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .powered {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(138, 43, 226, 0.15);
-    border: 1px solid rgba(138, 43, 226, 0.4);
-    padding: 6px 12px; border-radius: 20px;
-    font-size: 0.8em; font-weight: 600; color: #c084fc;
-  }
   .lang-switch {
     display: flex; background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden;
@@ -48,6 +41,72 @@
     color: #a1a1aa; cursor: pointer; font-weight: 600;
   }
   .lang-btn.active { background: #c084fc; color: #0f0f23; }
+
+  /* BÜYÜK HERO LOGO */
+  .vdex-hero {
+    text-align: center;
+    padding: 40px 20px 30px;
+    position: relative;
+  }
+  .vdex-hero-video {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow:
+      0 0 60px rgba(138, 43, 226, 0.5),
+      0 0 100px rgba(138, 43, 226, 0.2);
+    position: relative;
+    animation: heroFloat 4s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .vdex-hero-video::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, #8338ec, #c084fc, #00d4ff, #8338ec);
+    background-size: 300% 300%;
+    border-radius: 34px;
+    z-index: -1;
+    animation: borderGlow 4s linear infinite;
+  }
+  @keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .vdex-hero-video video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .vdex-hero-title {
+    font-size: 2.2em;
+    font-weight: 800;
+    background: linear-gradient(90deg, #c084fc, #00d4ff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .vdex-hero-sub {
+    color: #a1a1aa;
+    font-size: 1em;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .powered-mini {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(138, 43, 226, 0.15);
+    border: 1px solid rgba(138, 43, 226, 0.4);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.85em; font-weight: 600; color: #c084fc;
+    margin-top: 15px;
+  }
+  .powered-mini video {
+    width: 20px; height: 20px; border-radius: 4px; object-fit: cover;
+  }
 
   .stats-grid {
     display: grid;
@@ -75,7 +134,6 @@
   .stat-value.purple { color: #c084fc; }
   .stat-sub { font-size: 0.75em; color: #71717a; margin-top: 4px; }
 
-  /* AKORDIYON */
   .accordion {
     margin: 15px 0;
     background: rgba(255,255,255,0.03);
@@ -86,7 +144,6 @@
   }
   .accordion:hover { border-color: rgba(138, 43, 226, 0.3); }
   .accordion.open { border-color: rgba(138, 43, 226, 0.5); }
-
   .accordion-header {
     padding: 18px 20px;
     cursor: pointer;
@@ -98,7 +155,6 @@
   }
   .accordion-header:hover { background: rgba(138, 43, 226, 0.08); }
   .accordion.open .accordion-header { background: rgba(138, 43, 226, 0.05); }
-
   .accordion-title {
     font-size: 1.1em;
     font-weight: 600;
@@ -130,7 +186,6 @@
     background: rgba(138, 43, 226, 0.2);
     transform: rotate(180deg);
   }
-
   .accordion-body {
     max-height: 0;
     overflow: hidden;
@@ -142,7 +197,6 @@
   .accordion-content {
     padding: 0 20px 20px 20px;
   }
-
   .pairs-table {
     width: 100%; border-collapse: separate; border-spacing: 0 6px;
   }
@@ -178,14 +232,12 @@
     display: inline-block;
   }
   .tv-btn:hover { background: #2962ff; border-color: #2962ff; }
-
   .grid-2 {
     display: grid; grid-template-columns: 1fr; gap: 15px;
   }
   @media (min-width: 900px) {
     .grid-2 { grid-template-columns: 1fr 1fr; }
   }
-
   .leaderboard-list { display: flex; flex-direction: column; gap: 8px; }
   .lb-item {
     display: grid; grid-template-columns: 35px 1fr auto; align-items: center; gap: 10px;
@@ -256,7 +308,6 @@
   .ann-cat.listings { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
   .ann-cat.updates { background: rgba(0, 212, 255, 0.15); color: #00d4ff; }
   .ann-date { font-size: 0.8em; color: #71717a; }
-
   .loading { text-align: center; padding: 30px; color: #a1a1aa; }
   .error { text-align: center; padding: 20px; color: #ff4466; }
   .vdex-cta {
@@ -265,17 +316,27 @@
     border: 1px solid rgba(138, 43, 226, 0.2); border-radius: 16px;
   }
   .vdex-cta-btn {
-    display: inline-block; padding: 12px 30px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 30px;
     background: linear-gradient(135deg, #8338ec, #c084fc);
     color: white; text-decoration: none; border-radius: 8px;
     font-weight: 700; transition: all 0.2s; margin-top: 12px;
+  }
+  .vdex-cta-btn video {
+    width: 24px; height: 24px; border-radius: 4px; object-fit: cover;
   }
   .vdex-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4); }
   footer {
     text-align: center; padding: 30px; color: #71717a; font-size: 0.85em;
     border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px;
   }
-
+  .footer-powered {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #c084fc; font-weight: 600; margin-top: 6px;
+  }
+  .footer-powered video {
+    width: 24px; height: 24px; border-radius: 4px; object-fit: cover;
+  }
   @media (max-width: 600px) {
     h1 { font-size: 1.4em; }
     .stat-value { font-size: 1.3em; }
@@ -284,6 +345,8 @@
     .accordion-content { padding: 0 12px 16px 12px; }
     .accordion-meta { display: none; }
     .hide-mobile { display: none; }
+    .vdex-hero-video { width: 140px; height: 140px; }
+    .vdex-hero-title { font-size: 1.6em; }
   }
 </style>
 </head>
@@ -292,14 +355,26 @@
   <header>
     <div class="header-left">
       <a href="index.html" class="back-btn"><span>←</span> <span data-key="back">Ana Sayfa</span></a>
-      <h1>⚡ <span data-key="page_title">VDEX Verileri</span></h1>
-      <span class="powered">⚡ Powered by VDEX</span>
+      <h1><span data-key="page_title">VDEX Verileri</span></h1>
     </div>
     <div class="lang-switch">
       <button class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
       <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
     </div>
   </header>
+
+  <!-- BÜYÜK HERO LOGO -->
+  <div class="vdex-hero">
+    <div class="vdex-hero-video">
+      <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+    </div>
+    <div class="vdex-hero-title">VDEX</div>
+    <div class="vdex-hero-sub" data-key="hero_sub">Self-custodial perpetual DEX • Real-time market data</div>
+    <div class="powered-mini">
+      <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+      Powered by VDEX
+    </div>
+  </div>
 
   <div class="stats-grid">
     <div class="stat-card">
@@ -324,7 +399,6 @@
     </div>
   </div>
 
-  <!-- Trading Pairs -->
   <div class="accordion" id="acc-pairs">
     <div class="accordion-header" onclick="toggleAcc('acc-pairs')">
       <div class="accordion-title">📊 <span data-key="t_pairs">VDEX Trading Pairs</span></div>
@@ -358,7 +432,6 @@
   </div>
 
   <div class="grid-2">
-    <!-- Yarışmalar -->
     <div class="accordion" id="acc-comp">
       <div class="accordion-header" onclick="toggleAcc('acc-comp')">
         <div class="accordion-title">🏆 <span data-key="t_comp">Yarışmalar</span></div>
@@ -376,7 +449,6 @@
       </div>
     </div>
 
-    <!-- Top Trader'lar -->
     <div class="accordion" id="acc-lb">
       <div class="accordion-header" onclick="toggleAcc('acc-lb')">
         <div class="accordion-title">🥇 <span data-key="t_lb">Top Trader'lar</span></div>
@@ -395,7 +467,6 @@
     </div>
   </div>
 
-  <!-- Duyurular -->
   <div class="accordion" id="acc-ann">
     <div class="accordion-header" onclick="toggleAcc('acc-ann')">
       <div class="accordion-title">📢 <span data-key="t_ann">Son Duyurular</span></div>
@@ -416,12 +487,18 @@
   <div class="vdex-cta">
     <h2 style="font-size: 1.4em; margin-bottom: 10px;" data-key="cta_title">VDEX'te işlem yapmaya başla</h2>
     <p style="color: #a1a1aa;" data-key="cta_sub">Self-custodial perpetual DEX • Düşük ücretler • Yüksek leverage</p>
-    <a href="https://app.vdex.trade" target="_blank" class="vdex-cta-btn" data-key="cta_btn">⚡ VDEX'i Aç</a>
+    <a href="https://app.vdex.trade" target="_blank" class="vdex-cta-btn">
+      <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+      <span data-key="cta_btn">VDEX'i Aç</span>
+    </a>
   </div>
 
   <footer>
     <p data-key="disclaimer">⚠️ Yatırım tavsiyesi değildir. Veriler VDEX public API'sinden alınmaktadır.</p>
-    <p style="margin-top: 6px; color: #c084fc; font-weight: 600;">⚡ Powered by VDEX</p>
+    <p class="footer-powered">
+      <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
+      Powered by VDEX
+    </p>
   </footer>
 </div>
 
@@ -429,6 +506,7 @@
 const I18N = {
   tr: {
     back: "Ana Sayfa", page_title: "VDEX Verileri",
+    hero_sub: "Self-custodial perpetual DEX • Anlık market verileri",
     s_pairs: "Trading Pair", s_pairs_sub: "VDEX'te listeli",
     s_volume: "30g Hacim", s_volume_sub: "VMM toplam",
     s_apr: "30g APR", s_apr_sub: "VMM yıllık",
@@ -439,7 +517,7 @@ const I18N = {
     c_volume: "24s Hacim", c_lev: "Leverage", c_funding: "Funding",
     cta_title: "VDEX'te işlem yapmaya başla",
     cta_sub: "Self-custodial perpetual DEX • Düşük ücretler • Yüksek leverage",
-    cta_btn: "⚡ VDEX'i Aç",
+    cta_btn: "VDEX'i Aç",
     disclaimer: "⚠️ Yatırım tavsiyesi değildir. Veriler VDEX public API'sinden alınmaktadır.",
     ended: "Bitti", active: "Aktif",
     prize: "Ödül", participants: "Katılımcı", volume: "Hacim",
@@ -451,6 +529,7 @@ const I18N = {
   },
   en: {
     back: "Home", page_title: "VDEX Data",
+    hero_sub: "Self-custodial perpetual DEX • Real-time market data",
     s_pairs: "Trading Pairs", s_pairs_sub: "Listed on VDEX",
     s_volume: "30d Volume", s_volume_sub: "VMM total",
     s_apr: "30d APR", s_apr_sub: "VMM annual",
@@ -461,7 +540,7 @@ const I18N = {
     c_volume: "24h Volume", c_lev: "Leverage", c_funding: "Funding",
     cta_title: "Start trading on VDEX",
     cta_sub: "Self-custodial perpetual DEX • Low fees • High leverage",
-    cta_btn: "⚡ Open VDEX",
+    cta_btn: "Open VDEX",
     disclaimer: "⚠️ Not financial advice. Data from VDEX public API.",
     ended: "Ended", active: "Active",
     prize: "Prize", participants: "Players", volume: "Volume",
