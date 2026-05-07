@@ -103,14 +103,11 @@
     border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .pairs-table thead th:hover { color: #c084fc; }
-  .pairs-table thead th.active-sort { color: #c084fc; }
   .pairs-table tbody tr {
     background: rgba(255,255,255,0.02); transition: all 0.2s;
   }
   .pairs-table tbody tr:hover { background: rgba(138, 43, 226, 0.08); }
-  .pairs-table tbody td {
-    padding: 12px; font-size: 0.9em;
-  }
+  .pairs-table tbody td { padding: 12px; font-size: 0.9em; }
   .pairs-table tbody td:first-child { border-radius: 8px 0 0 8px; }
   .pairs-table tbody td:last-child { border-radius: 0 8px 8px 0; }
   .pair-symbol { font-weight: 700; }
@@ -186,8 +183,8 @@
     border-radius: 8px; border-left: 3px solid #c084fc;
     transition: all 0.2s;
   }
-  .ann-item.listing { border-left-color: #00ff88; }
-  .ann-item.update { border-left-color: #00d4ff; }
+  .ann-item.listings { border-left-color: #00ff88; }
+  .ann-item.updates { border-left-color: #00d4ff; }
   .ann-header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
@@ -240,8 +237,7 @@
     </div>
   </header>
 
-  <!-- ÜST İSTATİSTİKLER -->
-  <div class="stats-grid" id="statsGrid">
+  <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-label" data-key="s_pairs">Trading Pair</div>
       <div class="stat-value purple" id="statPairs">⏳</div>
@@ -264,7 +260,6 @@
     </div>
   </div>
 
-  <!-- ANA TABLO: Trading Pairs -->
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">📊 <span data-key="t_pairs">VDEX Trading Pairs</span></div>
@@ -290,7 +285,6 @@
     </div>
   </div>
 
-  <!-- 2'li grid: Yarışmalar + Leaderboard -->
   <div class="grid-2">
     <div class="panel">
       <div class="panel-header">
@@ -311,7 +305,6 @@
     </div>
   </div>
 
-  <!-- Duyurular -->
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">📢 <span data-key="t_ann">Son Duyurular</span></div>
@@ -321,7 +314,6 @@
     </div>
   </div>
 
-  <!-- VDEX'e Git CTA -->
   <div class="vdex-cta">
     <h2 style="font-size: 1.4em; margin-bottom: 10px;" data-key="cta_title">VDEX'te işlem yapmaya başla</h2>
     <p style="color: #a1a1aa;" data-key="cta_sub">Self-custodial perpetual DEX • Düşük ücretler • Yüksek leverage</p>
@@ -384,7 +376,13 @@ let pairsData = [];
 let sortKey = 'volume';
 let sortDir = 'desc';
 
-const API = 'https://api.vdex.trade/api-gateway';
+// PROXY üzerinden çağrı (CORS sorununu aşmak için)
+async function vdexFetch(path) {
+  const url = '/.netlify/functions/vdex-proxy?path=' + encodeURIComponent(path);
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('proxy err');
+  return await r.json();
+}
 
 function t() { return I18N[currentLang]; }
 
@@ -442,7 +440,6 @@ function fmtDate(d) {
   } catch(e) { return d; }
 }
 
-// VERİ ÇEKME
 async function fetchAll() {
   loadPairs();
   loadVMM();
@@ -453,8 +450,7 @@ async function fetchAll() {
 
 async function loadPairs() {
   try {
-    const r = await fetch(API + '/v2/tokens/supported-pairs?chainId=1');
-    const j = await r.json();
+    const j = await vdexFetch('v2/tokens/supported-pairs?chainId=1');
     if (j.code !== 0) throw new Error('err');
     pairsData = (j.data || []).filter(p => !p.isDisabled);
     document.getElementById('statPairs').textContent = pairsData.length;
@@ -469,13 +465,10 @@ async function loadPairs() {
 
 async function loadVMM() {
   try {
-    const [rVol, rApr, rPnl] = await Promise.all([
-      fetch(API + '/v1/vmm/volume?timeframe=30d'),
-      fetch(API + '/v2/vmm/apr?timeframe=30d'),
-      fetch(API + '/v2/vmm/apr?timeframe=30d') // pnl da apr endpointinde geliyor
+    const [jVol, jApr] = await Promise.all([
+      vdexFetch('v1/vmm/volume?timeframe=30d'),
+      vdexFetch('v2/vmm/apr?timeframe=30d')
     ]);
-    const jVol = await rVol.json();
-    const jApr = await rApr.json();
 
     const vol = jVol.data?.volume;
     document.getElementById('statVolume').textContent = vol != null ? fmtBig(vol) : '-';
@@ -498,8 +491,7 @@ async function loadVMM() {
 
 async function loadCompetitions() {
   try {
-    const r = await fetch(API + '/v1/competitions/?type=trading');
-    const j = await r.json();
+    const j = await vdexFetch('v1/competitions/?type=trading');
     window._comps = j.data || [];
     renderCompetitions(window._comps);
   } catch (e) {
@@ -510,8 +502,7 @@ async function loadCompetitions() {
 
 async function loadLeaderboard() {
   try {
-    const r = await fetch(API + '/v1/public/user-leaderboard?page=1&page_size=10');
-    const j = await r.json();
+    const j = await vdexFetch('v1/public/user-leaderboard?page=1&page_size=10');
     window._lb = j.data?.participants || [];
     renderLeaderboard(window._lb);
   } catch (e) {
@@ -522,8 +513,7 @@ async function loadLeaderboard() {
 
 async function loadAnnouncements() {
   try {
-    const r = await fetch(API + '/v1/public/announcements?limit=8&offset=0');
-    const j = await r.json();
+    const j = await vdexFetch('v1/public/announcements?limit=8&offset=0');
     window._ann = j.data?.announcements || [];
     renderAnnouncements(window._ann);
   } catch (e) {
@@ -532,7 +522,6 @@ async function loadAnnouncements() {
   }
 }
 
-// SIRALAMA
 function sortPairs(key) {
   if (sortKey === key) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
   else { sortKey = key; sortDir = 'desc'; }
@@ -558,7 +547,6 @@ function getSorted() {
   });
 }
 
-// RENDER FONKSİYONLARI
 function renderPairs() {
   const sorted = getSorted();
   const tbody = document.getElementById('pairsBody');
@@ -566,9 +554,6 @@ function renderPairs() {
     tbody.innerHTML = `<tr><td colspan="7"><div class="loading">${t().no_data}</div></td></tr>`;
     return;
   }
-
-  // Aktif sıralama göstergesi
-  document.querySelectorAll('.pairs-table thead th').forEach(th => th.classList.remove('active-sort'));
 
   tbody.innerHTML = sorted.map(p => {
     const change = parseFloat((p.twentyFourHourPriceChange||'0').replace('%','').replace('+',''));
@@ -669,7 +654,6 @@ function renderAnnouncements(list) {
   }).join('');
 }
 
-// Başlat
 fetchAll();
 </script>
 </body>
