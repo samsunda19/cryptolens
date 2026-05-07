@@ -378,7 +378,7 @@ let sortDir = 'desc';
 
 // PROXY üzerinden çağrı (CORS sorununu aşmak için)
 async function vdexFetch(path) {
-  const url = '/.netlify/functions/vdex-proxy?path=' + encodeURIComponent(path);
+  const url = 'https://vdex-proxy.samsunda-yasamak.workers.dev/?path=' + encodeURIComponent(path);
   const r = await fetch(url);
   if (!r.ok) throw new Error('proxy err');
   return await r.json();
