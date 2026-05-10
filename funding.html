@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Funding Rate Karşılaştırma | CryptoLens</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #080c10;
@@ -56,7 +56,7 @@
   nav a {
     color: var(--text-dim);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     margin-left: 24px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -83,7 +83,7 @@
   .hero p {
     color: var(--text-dim);
     font-size: 14px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
   }
 
   /* CONTROLS */
@@ -102,8 +102,8 @@
     border-radius: 8px;
     padding: 8px 14px;
     color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
     width: 220px;
     outline: none;
     transition: border-color 0.2s;
@@ -118,7 +118,7 @@
     padding: 8px 14px;
     color: var(--text-dim);
     font-family: 'Syne', sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     text-transform: uppercase;
@@ -138,7 +138,7 @@
     padding: 8px 18px;
     color: #000;
     font-family: 'Syne', sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 800;
     cursor: pointer;
     text-transform: uppercase;
@@ -155,7 +155,7 @@
     display: flex;
     gap: 24px;
     background: rgba(0,0,0,0.3);
-    font-family: 'Space Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
@@ -194,7 +194,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -215,7 +215,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   thead tr {
@@ -251,8 +251,8 @@
 
   td {
     padding: 11px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
     white-space: nowrap;
   }
 
@@ -262,7 +262,7 @@
     gap: 8px;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 14px;
     color: #fff;
   }
 
@@ -289,7 +289,7 @@
     display: inline-block;
     padding: 3px 8px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
   }
 
@@ -354,8 +354,8 @@
     text-align: center;
     padding: 60px 32px;
     color: var(--text-dim);
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
   }
 
   /* STATS CARDS */
@@ -393,7 +393,7 @@
   }
 
   .stat-val {
-    font-family: 'Space Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 22px;
     font-weight: 700;
     color: #fff;
@@ -403,7 +403,7 @@
     font-size: 11px;
     color: var(--text-dim);
     margin-top: 3px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
   }
 
   /* FOOTER */
@@ -412,7 +412,7 @@
     border-top: 1px solid var(--border);
     font-size: 11px;
     color: var(--text-dim);
-    font-family: 'Space Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -539,21 +539,36 @@ let searchTerm = '';
 
 // ── EDGEX CONTRACT MAP (expandable) ─────────────────────
 const EDGEX_CONTRACTS = {
-  'BTC':  10000001,
-  'ETH':  10000002,
-  'SOL':  10000003,
-  'BNB':  10000004,
-  'XRP':  10000005,
-  'DOGE': 10000006,
-  'ADA':  10000007,
-  'AVAX': 10000008,
-  'LINK': 10000009,
-  'DOT':  10000010,
-  'LTC':  10000011,
-  'UNI':  10000012,
-  'ATOM': 10000013,
-  'ETC':  10000014,
-  'FIL':  10000015,
+  'BTC':   10000001,
+  'ETH':   10000002,
+  'SOL':   10000003,
+  'BNB':   10000004,
+  'XRP':   10000005,
+  'DOGE':  10000006,
+  'ADA':   10000007,
+  'AVAX':  10000008,
+  'LINK':  10000009,
+  'DOT':   10000010,
+  'LTC':   10000011,
+  'UNI':   10000012,
+  'ATOM':  10000013,
+  'ETC':   10000014,
+  'FIL':   10000015,
+  'NEAR':  10000016,
+  'APT':   10000017,
+  'OP':    10000018,
+  'ARB':   10000019,
+  'SUI':   10000020,
+  'INJ':   10000021,
+  'TIA':   10000022,
+  'SEI':   10000023,
+  'WLD':   10000024,
+  'BLUR':  10000025,
+  'PEPE':  10000026,
+  'FLOKI': 10000027,
+  'BONK':  10000028,
+  'WIF':   10000029,
+  'ORDI':  10000030,
 };
 
 // ── STATUS HELPERS ───────────────────────────────────────
@@ -568,16 +583,19 @@ function setStatus(exchange, state, text) {
 async function fetchVDEX() {
   setStatus('vdex', 'loading', 'VDEX: yükleniyor...');
   try {
-    const res = await fetch(`${VDEX_PROXY}/api/v1/public/funding/getFundingRatePage?page=1&size=100`);
+    const res = await fetch(`${VDEX_PROXY}/api/v1/public/funding/getFundingRatePage?page=1&size=200`);
     const json = await res.json();
     vdexData = {};
-    const list = json?.data?.dataList || [];
+    const list = json?.data?.dataList || json?.data || [];
     list.forEach(item => {
-      const sym = item.symbol?.replace('-USDT','').replace('USDT','').toUpperCase();
+      let sym = item.symbol || item.contractName || item.name || '';
+      sym = sym.replace(/-USDT$/i,'').replace(/USDT$/i,'').replace(/-USD$/i,'').toUpperCase().trim();
       if (sym) vdexData[sym] = parseFloat(item.fundingRate) || 0;
     });
-    setStatus('vdex', 'ok', `VDEX: ${list.length} coin`);
-    document.getElementById('stat-vdex').textContent = list.length;
+    const count = Object.keys(vdexData).length;
+    setStatus('vdex', 'ok', `VDEX: ${count} coin`);
+    document.getElementById('stat-vdex').textContent = count;
+    if (count === 0) console.warn('VDEX boş geldi, response:', JSON.stringify(json).slice(0, 400));
   } catch(e) {
     setStatus('vdex', 'err', 'VDEX: hata');
     console.error('VDEX error:', e);
