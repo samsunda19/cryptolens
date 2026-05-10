@@ -9,129 +9,48 @@
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
-    color: #e4e4e7;
-    min-height: 100vh;
-    padding: 20px;
+    color: #e4e4e7; min-height: 100vh; padding: 20px;
   }
   .container { max-width: 1200px; margin: 0 auto; transition: margin-right 0.3s; }
   .container.panel-open { margin-right: 420px; }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 20px; flex-wrap: wrap; gap: 15px; }
   .header-left { display: flex; align-items: center; gap: 20px; }
+  .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .back-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #e4e4e7;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: #e4e4e7; padding: 8px 14px; border-radius: 8px; cursor: pointer;
+    text-decoration: none; font-size: 0.9em; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
   }
-  .back-btn:hover {
-    background: rgba(0, 212, 255, 0.1);
-    border-color: #00d4ff;
+  .back-btn:hover { background: rgba(0, 212, 255, 0.1); border-color: #00d4ff; }
+  .quick-nav { display: flex; gap: 8px; }
+  .quick-nav a {
+    padding: 7px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04); color: #a1a1aa; text-decoration: none;
+    font-size: 0.82em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s;
   }
-  h1 {
-    font-size: 2em;
-    background: linear-gradient(90deg, #00d4ff, #00ff88);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .lang-switch {
-    display: flex;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .lang-btn {
-    padding: 8px 16px;
-    background: none;
-    border: none;
-    color: #a1a1aa;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
+  .quick-nav a:hover { color: #00d4ff; border-color: #00d4ff; background: rgba(0,212,255,0.08); }
+  .quick-nav a.active { color: #00d4ff; border-color: #00d4ff; background: rgba(0,212,255,0.12); }
+  h1 { font-size: 2em; background: linear-gradient(90deg, #00d4ff, #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .lang-switch { display: flex; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; }
+  .lang-btn { padding: 8px 16px; background: none; border: none; color: #a1a1aa; cursor: pointer; font-weight: 600; transition: all 0.2s; }
   .lang-btn.active { background: #00d4ff; color: #0f0f23; }
-  .filters {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-    margin: 20px 0;
-  }
-  .filter-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 18px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-    position: relative;
-  }
-  .filter-card:hover {
-    transform: translateY(-3px);
-    border-color: #00d4ff;
-  }
-  .filter-card.active {
-    background: rgba(0, 212, 255, 0.15);
-    border-color: #00d4ff;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-  }
-  .filter-card.active::after {
-    content: "✓";
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    color: #00ff88;
-    font-weight: bold;
-    font-size: 1.2em;
-  }
+  .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+  .filter-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px; cursor: pointer; transition: all 0.3s; text-align: center; position: relative; }
+  .filter-card:hover { transform: translateY(-3px); border-color: #00d4ff; }
+  .filter-card.active { background: rgba(0,212,255,0.15); border-color: #00d4ff; box-shadow: 0 0 20px rgba(0,212,255,0.3); }
+  .filter-card.active::after { content: "✓"; position: absolute; top: 8px; right: 10px; color: #00ff88; font-weight: bold; font-size: 1.2em; }
   .filter-icon { font-size: 1.8em; margin-bottom: 8px; }
   .filter-title { font-weight: 600; margin-bottom: 5px; font-size: 0.95em; }
   .filter-desc { font-size: 0.8em; color: #a1a1aa; }
-  .filter-info {
-    text-align: center;
-    color: #00d4ff;
-    margin-bottom: 15px;
-    font-size: 0.9em;
-    min-height: 22px;
-  }
-  .results {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    padding: 20px;
-    min-height: 200px;
-  }
+  .filter-info { text-align: center; color: #00d4ff; margin-bottom: 15px; font-size: 0.9em; min-height: 22px; }
+  .results { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; min-height: 200px; }
   .results h2 { margin-bottom: 15px; color: #00d4ff; font-size: 1.2em; }
   .loading { text-align: center; padding: 40px; color: #a1a1aa; }
   .token-list { display: grid; gap: 8px; }
-  .token-row {
-    display: grid;
-    grid-template-columns: 40px 2fr 1fr 1fr 1fr 80px;
-    align-items: center;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
-    transition: all 0.2s;
-    cursor: pointer;
-    gap: 10px;
-  }
-  .token-row:hover { background: rgba(0, 212, 255, 0.08); }
-  .token-row.selected { background: rgba(0, 212, 255, 0.15); border-left: 3px solid #00d4ff; }
+  .token-row { display: grid; grid-template-columns: 40px 2fr 1fr 1fr 1fr 80px; align-items: center; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; transition: all 0.2s; cursor: pointer; gap: 10px; }
+  .token-row:hover { background: rgba(0,212,255,0.08); }
+  .token-row.selected { background: rgba(0,212,255,0.15); border-left: 3px solid #00d4ff; }
   .token-row img { width: 32px; height: 32px; border-radius: 50%; }
   .token-name-block { display: flex; flex-direction: column; min-width: 0; }
   .token-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -139,161 +58,46 @@
   .price { font-family: monospace; font-size: 0.95em; }
   .change-positive { color: #00ff88; }
   .change-negative { color: #ff4466; }
-  .tv-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: #e4e4e7;
-    padding: 6px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.8em;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.2s;
-  }
+  .tv-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #e4e4e7; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8em; text-decoration: none; text-align: center; transition: all 0.2s; }
   .tv-btn:hover { background: #2962ff; border-color: #2962ff; }
-  .header-row {
-    display: grid;
-    grid-template-columns: 40px 2fr 1fr 1fr 1fr 80px;
-    padding: 10px 12px;
-    color: #a1a1aa;
-    font-size: 0.8em;
-    text-transform: uppercase;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 8px;
-    gap: 10px;
-  }
-  .sortable {
-    cursor: pointer;
-    user-select: none;
-    transition: color 0.2s;
-  }
+  .header-row { display: grid; grid-template-columns: 40px 2fr 1fr 1fr 1fr 80px; padding: 10px 12px; color: #a1a1aa; font-size: 0.8em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px; gap: 10px; }
+  .sortable { cursor: pointer; user-select: none; transition: color 0.2s; }
   .sortable:hover { color: #00d4ff; }
   .sortable.active-sort { color: #00d4ff; font-weight: 700; }
   .sort-arrow { display: inline-block; margin-left: 4px; opacity: 0.6; }
   .sortable.active-sort .sort-arrow { opacity: 1; }
   .empty { text-align: center; padding: 60px 20px; color: #a1a1aa; }
   footer { text-align: center; padding: 30px; color: #71717a; font-size: 0.85em; }
-
-  .detail-panel {
-    position: fixed;
-    top: 0;
-    right: -420px;
-    width: 420px;
-    height: 100vh;
-    background: #16162e;
-    border-left: 1px solid rgba(0, 212, 255, 0.3);
-    overflow-y: auto;
-    transition: right 0.3s ease;
-    z-index: 100;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-  }
+  .detail-panel { position: fixed; top: 0; right: -420px; width: 420px; height: 100vh; background: #16162e; border-left: 1px solid rgba(0,212,255,0.3); overflow-y: auto; transition: right 0.3s ease; z-index: 100; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
   .detail-panel.open { right: 0; }
-  .panel-header {
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    position: sticky;
-    top: 0;
-    background: #16162e;
-    z-index: 5;
-  }
+  .panel-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; background: #16162e; z-index: 5; }
   .panel-token { display: flex; align-items: center; gap: 12px; }
   .panel-token img { width: 40px; height: 40px; border-radius: 50%; }
   .panel-token h3 { font-size: 1.1em; }
   .panel-token span { color: #a1a1aa; font-size: 0.85em; text-transform: uppercase; }
-  .close-btn {
-    background: none;
-    border: none;
-    color: #a1a1aa;
-    font-size: 1.5em;
-    cursor: pointer;
-    padding: 0 8px;
-  }
+  .close-btn { background: none; border: none; color: #a1a1aa; font-size: 1.5em; cursor: pointer; padding: 0 8px; }
   .close-btn:hover { color: #fff; }
   .panel-body { padding: 20px; }
   .panel-price { font-size: 1.8em; font-family: monospace; margin-bottom: 5px; }
-  .panel-changes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin: 15px 0;
-  }
-  .change-box {
-    background: rgba(255,255,255,0.03);
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  .change-box-label {
-    font-size: 0.75em;
-    color: #a1a1aa;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
+  .panel-changes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0; }
+  .change-box { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; text-align: center; }
+  .change-box-label { font-size: 0.75em; color: #a1a1aa; text-transform: uppercase; margin-bottom: 4px; }
   .change-box-value { font-weight: 600; font-size: 1em; }
-  .chart-controls {
-    display: flex;
-    gap: 6px;
-    margin: 15px 0 10px 0;
-    flex-wrap: wrap;
-  }
-  .chart-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #a1a1aa;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85em;
-    transition: all 0.2s;
-  }
-  .chart-btn.active {
-    background: rgba(0, 212, 255, 0.2);
-    border-color: #00d4ff;
-    color: #00d4ff;
-  }
-  .chart-container {
-    background: rgba(0,0,0,0.2);
-    border-radius: 8px;
-    padding: 10px;
-    height: 220px;
-    position: relative;
-  }
+  .chart-controls { display: flex; gap: 6px; margin: 15px 0 10px 0; flex-wrap: wrap; }
+  .chart-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #a1a1aa; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: all 0.2s; }
+  .chart-btn.active { background: rgba(0,212,255,0.2); border-color: #00d4ff; color: #00d4ff; }
+  .chart-container { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 10px; height: 220px; position: relative; }
   #priceChart { width: 100%; height: 100%; }
   .stats { margin-top: 20px; }
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
+  .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .stat-row:last-child { border-bottom: none; }
   .stat-label { color: #a1a1aa; font-size: 0.9em; }
   .stat-value { font-family: monospace; font-weight: 600; }
   .panel-actions { display: flex; gap: 8px; margin-top: 20px; }
-  .panel-btn {
-    flex: 1;
-    padding: 10px;
-    background: rgba(41, 98, 255, 0.15);
-    border: 1px solid #2962ff;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
+  .panel-btn { flex: 1; padding: 10px; background: rgba(41,98,255,0.15); border: 1px solid #2962ff; color: #fff; border-radius: 8px; cursor: pointer; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.2s; }
   .panel-btn:hover { background: #2962ff; }
-  .panel-btn.secondary {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.15);
-  }
+  .panel-btn.secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
   .panel-btn.secondary:hover { background: rgba(255,255,255,0.1); }
-
   @media (max-width: 768px) {
     h1 { font-size: 1.4em; }
     .container.panel-open { margin-right: 0; }
@@ -301,6 +105,7 @@
     .detail-panel.open { right: 0; }
     .token-row, .header-row { grid-template-columns: 36px 1.5fr 1fr 80px; gap: 8px; }
     .hide-mobile { display: none; }
+    .quick-nav { display: none; }
   }
 </style>
 </head>
@@ -308,12 +113,19 @@
 <div class="container" id="container">
   <header>
     <div class="header-left">
-      <a href="index.html" class="back-btn"><span>←</span> <span data-key="back">Ana Sayfa</span></a>
+      <a href="index.html" class="back-btn">← <span data-key="back">Ana Sayfa</span></a>
       <h1>🎯 <span data-key="page_title">Akıllı Filtreler</span></h1>
     </div>
-    <div class="lang-switch">
-      <button class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    <div class="header-right">
+      <nav class="quick-nav">
+        <a href="filters.html" class="active">Filtreler</a>
+        <a href="vdex.html">VDEX</a>
+        <a href="funding.html">Funding</a>
+      </nav>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </header>
 
@@ -346,7 +158,6 @@
   </div>
 
   <div class="filter-info" id="filterInfo"></div>
-
   <div class="results">
     <h2 id="resultTitle">Bir filtre seç</h2>
     <div id="resultContent">
@@ -371,68 +182,46 @@
 <script>
 const I18N = {
   tr: {
-    back: "Ana Sayfa",
-    page_title: "Akıllı Filtreler",
+    back: "Ana Sayfa", page_title: "Akıllı Filtreler",
     f1_title: "Yükselenler", f1_desc: "Son 7 günde %30+ artan tokenlar",
     f2_title: "Hacim Patlaması", f2_desc: "24s hacmi market cap'in %30+'i",
     f3_title: "Düşüşten Dönüş", f3_desc: "7g düşmüş ama 24s yükselişe geçmiş",
     f4_title: "Mid-Cap Gemler", f4_desc: "10M - 500M arası market cap",
     f5_title: "Whale İlgisi", f5_desc: "Yüksek hacim/market cap oranı",
-    selectFilter: "Bir filtre seç",
-    emptyMsg: "👆 Yukarıdan bir veya birden fazla filtre seç",
+    selectFilter: "Bir filtre seç", emptyMsg: "👆 Yukarıdan bir veya birden fazla filtre seç",
     filterCount: (n) => `${n} filtre aktif (kesişim) • Sıralamak için sütun başlığına tıkla`,
     noResult: "😴 Bu kritere uyan token yok. Başka filtre dene.",
-    loading: "⏳ Veriler yükleniyor...",
-    error: "⚠️ Veri çekilemedi. Birkaç saniye sonra tekrar dene.",
+    loading: "⏳ Veriler yükleniyor...", error: "⚠️ Veri çekilemedi. Birkaç saniye sonra tekrar dene.",
     disclaimer: "⚠️ Yatırım tavsiyesi değildir. Kendi araştırmanı yap (DYOR).",
     col_token: "Token", col_price: "Fiyat", col_mcap: "M.Cap", col_change: "Değişim 24s",
     h_24h: "24 Saat", h_7d: "7 Gün", h_30d: "30 Gün",
     s_mcap: "Market Cap", s_volume: "24s Hacim", s_supply: "Dolaşımdaki Arz",
-    s_total: "Toplam Arz", s_max: "Max Arz", s_ath: "ATH", s_atl: "ATL",
-    s_rank: "Sıralama",
+    s_total: "Toplam Arz", s_max: "Max Arz", s_ath: "ATH", s_atl: "ATL", s_rank: "Sıralama",
     btn_tv: "TradingView", btn_cg: "CoinGecko",
     chart_24h: "24s", chart_7d: "7g", chart_30d: "30g", chart_90d: "90g", chart_1y: "1y",
     chart_err: "Grafik yüklenemedi",
-    titles: {
-      pumping: "🚀 Son 7 Günde %30+ Yükselen Tokenlar",
-      volume: "📊 Hacim Patlaması Yaşayan Tokenlar",
-      oversold: "🔄 Düşüşten Dönüşe Geçen Tokenlar",
-      midcap: "💎 Mid-Cap Gem Adayları",
-      whales: "🐋 Whale İlgisi Yüksek Tokenlar",
-      multi: "🎯 Çoklu Filtre Sonuçları"
-    }
+    titles: { pumping: "🚀 Son 7 Günde %30+ Yükselen Tokenlar", volume: "📊 Hacim Patlaması Yaşayan Tokenlar", oversold: "🔄 Düşüşten Dönüşe Geçen Tokenlar", midcap: "💎 Mid-Cap Gem Adayları", whales: "🐋 Whale İlgisi Yüksek Tokenlar", multi: "🎯 Çoklu Filtre Sonuçları" }
   },
   en: {
-    back: "Home",
-    page_title: "Smart Filters",
+    back: "Home", page_title: "Smart Filters",
     f1_title: "Pumping", f1_desc: "Tokens up 30%+ in last 7 days",
     f2_title: "Volume Spike", f2_desc: "24h volume 30%+ of market cap",
     f3_title: "Bounce Back", f3_desc: "Down 7d but reversing in 24h",
     f4_title: "Mid-Cap Gems", f4_desc: "Market cap between 10M - 500M",
     f5_title: "Whale Interest", f5_desc: "High volume/market cap ratio",
-    selectFilter: "Select a filter",
-    emptyMsg: "👆 Pick one or more filters above",
+    selectFilter: "Select a filter", emptyMsg: "👆 Pick one or more filters above",
     filterCount: (n) => `${n} filter(s) active (intersection) • Click column header to sort`,
     noResult: "😴 No tokens match. Try another filter.",
-    loading: "⏳ Loading data...",
-    error: "⚠️ Could not fetch data. Try again in a few seconds.",
+    loading: "⏳ Loading data...", error: "⚠️ Could not fetch data. Try again in a few seconds.",
     disclaimer: "⚠️ Not financial advice. Do your own research (DYOR).",
     col_token: "Token", col_price: "Price", col_mcap: "M.Cap", col_change: "24h Change",
     h_24h: "24 Hours", h_7d: "7 Days", h_30d: "30 Days",
     s_mcap: "Market Cap", s_volume: "24h Volume", s_supply: "Circulating Supply",
-    s_total: "Total Supply", s_max: "Max Supply", s_ath: "ATH", s_atl: "ATL",
-    s_rank: "Rank",
+    s_total: "Total Supply", s_max: "Max Supply", s_ath: "ATH", s_atl: "ATL", s_rank: "Rank",
     btn_tv: "TradingView", btn_cg: "CoinGecko",
     chart_24h: "24h", chart_7d: "7d", chart_30d: "30d", chart_90d: "90d", chart_1y: "1y",
     chart_err: "Chart could not load",
-    titles: {
-      pumping: "🚀 Tokens Up 30%+ in Last 7 Days",
-      volume: "📊 Tokens with Volume Spike",
-      oversold: "🔄 Bounce Back Tokens",
-      midcap: "💎 Mid-Cap Gem Candidates",
-      whales: "🐋 High Whale Interest Tokens",
-      multi: "🎯 Multi-Filter Results"
-    }
+    titles: { pumping: "🚀 Tokens Up 30%+ in Last 7 Days", volume: "📊 Tokens with Volume Spike", oversold: "🔄 Bounce Back Tokens", midcap: "💎 Mid-Cap Gem Candidates", whales: "🐋 High Whale Interest Tokens", multi: "🎯 Multi-Filter Results" }
   }
 };
 
@@ -445,19 +234,12 @@ let sortKey = 'change';
 let sortDir = 'desc';
 
 function t() { return I18N[currentLang]; }
-
-// Ana sayfadan kayıtlı dili al
-try {
-  const saved = localStorage.getItem('cryptolens_lang');
-  if (saved === 'en') currentLang = 'en';
-} catch(e) {}
+try { const saved = localStorage.getItem('cryptolens_lang'); if (saved === 'en') currentLang = 'en'; } catch(e) {}
 
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === lang);
-  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   applyTranslations();
   if (activeFilters.size > 0) renderResults();
   if (selectedToken) renderDetail(selectedToken);
@@ -467,10 +249,7 @@ function setLang(lang) {
 function applyTranslations() {
   const tr = t();
   document.getElementById('disclaimer').textContent = tr.disclaimer;
-  document.querySelectorAll('[data-key]').forEach(el => {
-    const key = el.dataset.key;
-    if (tr[key]) el.textContent = tr[key];
-  });
+  document.querySelectorAll('[data-key]').forEach(el => { const key = el.dataset.key; if (tr[key]) el.textContent = tr[key]; });
   if (activeFilters.size === 0) {
     document.getElementById('resultTitle').textContent = tr.selectFilter;
     document.getElementById('emptyMsg').textContent = tr.emptyMsg;
@@ -490,76 +269,44 @@ async function fetchCoins() {
 
 function toggleFilter(card) {
   const filter = card.dataset.filter;
-  if (activeFilters.has(filter)) {
-    activeFilters.delete(filter);
-    card.classList.remove('active');
-  } else {
-    activeFilters.add(filter);
-    card.classList.add('active');
-  }
+  if (activeFilters.has(filter)) { activeFilters.delete(filter); card.classList.remove('active'); }
+  else { activeFilters.add(filter); card.classList.add('active'); }
   renderResults();
 }
 
 async function renderResults() {
   const tr = t();
   const filterInfo = document.getElementById('filterInfo');
-
   if (activeFilters.size === 0) {
     document.getElementById('resultTitle').textContent = tr.selectFilter;
     document.getElementById('resultContent').innerHTML = `<div class="empty">${tr.emptyMsg}</div>`;
-    filterInfo.textContent = '';
-    return;
+    filterInfo.textContent = ''; return;
   }
-
-  if (activeFilters.size === 1) {
-    const f = [...activeFilters][0];
-    document.getElementById('resultTitle').textContent = tr.titles[f];
-    filterInfo.textContent = '';
-  } else {
-    document.getElementById('resultTitle').textContent = tr.titles.multi;
-    filterInfo.textContent = tr.filterCount(activeFilters.size);
-  }
-
+  if (activeFilters.size === 1) { document.getElementById('resultTitle').textContent = tr.titles[[...activeFilters][0]]; filterInfo.textContent = ''; }
+  else { document.getElementById('resultTitle').textContent = tr.titles.multi; filterInfo.textContent = tr.filterCount(activeFilters.size); }
   document.getElementById('resultContent').innerHTML = `<div class="loading">${tr.loading}</div>`;
-
   try {
     if (allCoins.length === 0) allCoins = await fetchCoins();
     let filtered = [...allCoins];
     activeFilters.forEach(f => { filtered = applyFilter(filtered, f); });
-    currentFiltered = filtered;
-    sortAndRender();
-  } catch (e) {
-    document.getElementById('resultContent').innerHTML = `<div class="empty">${tr.error}</div>`;
-  }
+    currentFiltered = filtered; sortAndRender();
+  } catch (e) { document.getElementById('resultContent').innerHTML = `<div class="empty">${tr.error}</div>`; }
 }
 
 function applyFilter(coins, filter) {
   switch(filter) {
-    case 'pumping':
-      return coins.filter(c => (c.price_change_percentage_7d_in_currency||0) > 30);
-    case 'volume':
-      return coins.filter(c => c.market_cap > 0 && (c.total_volume / c.market_cap) > 0.3);
-    case 'oversold':
-      return coins.filter(c =>
-        (c.price_change_percentage_7d_in_currency||0) < -10 &&
-        (c.price_change_percentage_24h||0) > 3);
-    case 'midcap':
-      return coins.filter(c => c.market_cap >= 10000000 && c.market_cap <= 500000000);
-    case 'whales':
-      return coins.filter(c =>
-        c.market_cap > 50000000 &&
-        (c.total_volume / c.market_cap) > 0.5);
+    case 'pumping': return coins.filter(c => (c.price_change_percentage_7d_in_currency||0) > 30);
+    case 'volume': return coins.filter(c => c.market_cap > 0 && (c.total_volume / c.market_cap) > 0.3);
+    case 'oversold': return coins.filter(c => (c.price_change_percentage_7d_in_currency||0) < -10 && (c.price_change_percentage_24h||0) > 3);
+    case 'midcap': return coins.filter(c => c.market_cap >= 10000000 && c.market_cap <= 500000000);
+    case 'whales': return coins.filter(c => c.market_cap > 50000000 && (c.total_volume / c.market_cap) > 0.5);
     default: return coins;
   }
 }
 
 function setSort(key) {
-  if (sortKey === key) {
-    sortDir = sortDir === 'desc' ? 'asc' : 'desc';
-  } else {
-    sortKey = key;
-    sortDir = 'desc';
-  }
+  if (sortKey === key) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+  else { sortKey = key; sortDir = 'desc'; }
   sortAndRender();
 }
 
@@ -569,10 +316,8 @@ function sortAndRender() {
     switch(sortKey) {
       case 'price': va = a.current_price||0; vb = b.current_price||0; break;
       case 'mcap': va = a.market_cap||0; vb = b.market_cap||0; break;
-      case 'name': va = (a.name||'').toLowerCase(); vb = (b.name||'').toLowerCase();
-        return sortDir === 'desc' ? vb.localeCompare(va) : va.localeCompare(vb);
-      case 'change':
-      default: va = a.price_change_percentage_24h||0; vb = b.price_change_percentage_24h||0; break;
+      case 'name': va = (a.name||'').toLowerCase(); vb = (b.name||'').toLowerCase(); return sortDir === 'desc' ? vb.localeCompare(va) : va.localeCompare(vb);
+      case 'change': default: va = a.price_change_percentage_24h||0; vb = b.price_change_percentage_24h||0; break;
     }
     return sortDir === 'desc' ? vb - va : va - vb;
   });
@@ -586,7 +331,6 @@ function formatPrice(p) {
   if (p < 1) return '$' + p.toFixed(4);
   return '$' + p.toLocaleString('en-US', {maximumFractionDigits: 2});
 }
-
 function formatBig(m) {
   if (m == null) return '-';
   if (m >= 1e12) return '$' + (m/1e12).toFixed(2) + 'T';
@@ -595,7 +339,6 @@ function formatBig(m) {
   if (m >= 1e3) return '$' + (m/1e3).toFixed(2) + 'K';
   return '$' + m.toLocaleString();
 }
-
 function formatSupply(n) {
   if (n == null) return '-';
   if (n >= 1e12) return (n/1e12).toFixed(2) + 'T';
@@ -604,53 +347,26 @@ function formatSupply(n) {
   if (n >= 1e3) return (n/1e3).toFixed(2) + 'K';
   return n.toLocaleString();
 }
-
-function arrow(key) {
-  if (sortKey !== key) return '<span class="sort-arrow">⇅</span>';
-  return sortDir === 'desc' ? '<span class="sort-arrow">▼</span>' : '<span class="sort-arrow">▲</span>';
-}
-
+function arrow(key) { if (sortKey !== key) return '<span class="sort-arrow">⇅</span>'; return sortDir === 'desc' ? '<span class="sort-arrow">▼</span>' : '<span class="sort-arrow">▲</span>'; }
 function activeCls(key) { return sortKey === key ? 'active-sort' : ''; }
 
 function renderTokens(tokens) {
   const tr = t();
-  if (tokens.length === 0) {
-    document.getElementById('resultContent').innerHTML = `<div class="empty">${tr.noResult}</div>`;
-    return;
-  }
-
-  let html = `
-    <div class="header-row">
-      <div>#</div>
-      <div class="sortable ${activeCls('name')}" onclick="setSort('name')">${tr.col_token}${arrow('name')}</div>
-      <div class="sortable ${activeCls('price')}" onclick="setSort('price')">${tr.col_price}${arrow('price')}</div>
-      <div class="sortable hide-mobile ${activeCls('mcap')}" onclick="setSort('mcap')">${tr.col_mcap}${arrow('mcap')}</div>
-      <div class="sortable hide-mobile ${activeCls('change')}" onclick="setSort('change')">${tr.col_change}${arrow('change')}</div>
-      <div></div>
-    </div>
-    <div class="token-list">
-  `;
-
+  if (tokens.length === 0) { document.getElementById('resultContent').innerHTML = `<div class="empty">${tr.noResult}</div>`; return; }
+  let html = `<div class="header-row"><div>#</div><div class="sortable ${activeCls('name')}" onclick="setSort('name')">${tr.col_token}${arrow('name')}</div><div class="sortable ${activeCls('price')}" onclick="setSort('price')">${tr.col_price}${arrow('price')}</div><div class="sortable hide-mobile ${activeCls('mcap')}" onclick="setSort('mcap')">${tr.col_mcap}${arrow('mcap')}</div><div class="sortable hide-mobile ${activeCls('change')}" onclick="setSort('change')">${tr.col_change}${arrow('change')}</div><div></div></div><div class="token-list">`;
   tokens.slice(0, 50).forEach((tok) => {
     const change = tok.price_change_percentage_24h || 0;
     const changeClass = change >= 0 ? 'change-positive' : 'change-negative';
     const tvSymbol = (tok.symbol || '').toUpperCase() + 'USDT';
-
-    html += `
-      <div class="token-row" onclick="openDetail('${tok.id}')" data-id="${tok.id}">
-        <img src="${tok.image}" alt="${tok.symbol}" onerror="this.style.display='none'">
-        <div class="token-name-block">
-          <div class="token-name">${tok.name}</div>
-          <div class="token-symbol">${tok.symbol}</div>
-        </div>
-        <div class="price">${formatPrice(tok.current_price)}</div>
-        <div class="price hide-mobile">${formatBig(tok.market_cap)}</div>
-        <div class="${changeClass} hide-mobile">${change.toFixed(1)}%</div>
-        <a class="tv-btn" href="https://www.tradingview.com/chart/?symbol=BINANCE:${tvSymbol}" target="_blank" onclick="event.stopPropagation()">📈 TV</a>
-      </div>
-    `;
+    html += `<div class="token-row" onclick="openDetail('${tok.id}')" data-id="${tok.id}">
+      <img src="${tok.image}" alt="${tok.symbol}" onerror="this.style.display='none'">
+      <div class="token-name-block"><div class="token-name">${tok.name}</div><div class="token-symbol">${tok.symbol}</div></div>
+      <div class="price">${formatPrice(tok.current_price)}</div>
+      <div class="price hide-mobile">${formatBig(tok.market_cap)}</div>
+      <div class="${changeClass} hide-mobile">${change.toFixed(1)}%</div>
+      <a class="tv-btn" href="https://www.tradingview.com/chart/?symbol=BINANCE:${tvSymbol}" target="_blank" onclick="event.stopPropagation()">📈 TV</a>
+    </div>`;
   });
-
   html += '</div>';
   document.getElementById('resultContent').innerHTML = html;
 }
@@ -659,14 +375,11 @@ async function openDetail(coinId) {
   const tok = allCoins.find(c => c.id === coinId);
   if (!tok) return;
   selectedToken = tok;
-
   document.querySelectorAll('.token-row').forEach(r => r.classList.remove('selected'));
   const row = document.querySelector(`.token-row[data-id="${coinId}"]`);
   if (row) row.classList.add('selected');
-
   document.getElementById('detailPanel').classList.add('open');
   document.getElementById('container').classList.add('panel-open');
-
   renderDetail(tok);
   loadChart(coinId, 7);
 }
@@ -684,170 +397,83 @@ function renderDetail(tok) {
   const c7 = tok.price_change_percentage_7d_in_currency || 0;
   const c30 = tok.price_change_percentage_30d_in_currency || 0;
   const tvSymbol = (tok.symbol || '').toUpperCase() + 'USDT';
-
-  document.getElementById('panelTokenInfo').innerHTML = `
-    <img src="${tok.image}" alt="">
-    <div>
-      <h3>${tok.name}</h3>
-      <span>${tok.symbol} • #${tok.market_cap_rank || '?'}</span>
-    </div>
-  `;
-
+  document.getElementById('panelTokenInfo').innerHTML = `<img src="${tok.image}" alt=""><div><h3>${tok.name}</h3><span>${tok.symbol} • #${tok.market_cap_rank || '?'}</span></div>`;
   document.getElementById('panelBody').innerHTML = `
     <div class="panel-price">${formatPrice(tok.current_price)}</div>
-    <div class="${c24 >= 0 ? 'change-positive' : 'change-negative'}" style="font-size: 1.1em; font-weight: 600;">
-      ${c24 >= 0 ? '▲' : '▼'} ${Math.abs(c24).toFixed(2)}% (24h)
-    </div>
-
+    <div class="${c24 >= 0 ? 'change-positive' : 'change-negative'}" style="font-size:1.1em;font-weight:600;">${c24 >= 0 ? '▲' : '▼'} ${Math.abs(c24).toFixed(2)}% (24h)</div>
     <div class="panel-changes">
-      <div class="change-box">
-        <div class="change-box-label">${tr.h_24h}</div>
-        <div class="change-box-value ${c24 >= 0 ? 'change-positive' : 'change-negative'}">${c24.toFixed(2)}%</div>
-      </div>
-      <div class="change-box">
-        <div class="change-box-label">${tr.h_7d}</div>
-        <div class="change-box-value ${c7 >= 0 ? 'change-positive' : 'change-negative'}">${c7.toFixed(2)}%</div>
-      </div>
-      <div class="change-box">
-        <div class="change-box-label">${tr.h_30d}</div>
-        <div class="change-box-value ${c30 >= 0 ? 'change-positive' : 'change-negative'}">${c30.toFixed(2)}%</div>
-      </div>
+      <div class="change-box"><div class="change-box-label">${tr.h_24h}</div><div class="change-box-value ${c24>=0?'change-positive':'change-negative'}">${c24.toFixed(2)}%</div></div>
+      <div class="change-box"><div class="change-box-label">${tr.h_7d}</div><div class="change-box-value ${c7>=0?'change-positive':'change-negative'}">${c7.toFixed(2)}%</div></div>
+      <div class="change-box"><div class="change-box-label">${tr.h_30d}</div><div class="change-box-value ${c30>=0?'change-positive':'change-negative'}">${c30.toFixed(2)}%</div></div>
     </div>
-
     <div class="chart-controls">
-      <button class="chart-btn" data-days="1" onclick="loadChart('${tok.id}', 1)">${tr.chart_24h}</button>
-      <button class="chart-btn active" data-days="7" onclick="loadChart('${tok.id}', 7)">${tr.chart_7d}</button>
-      <button class="chart-btn" data-days="30" onclick="loadChart('${tok.id}', 30)">${tr.chart_30d}</button>
-      <button class="chart-btn" data-days="90" onclick="loadChart('${tok.id}', 90)">${tr.chart_90d}</button>
-      <button class="chart-btn" data-days="365" onclick="loadChart('${tok.id}', 365)">${tr.chart_1y}</button>
+      <button class="chart-btn" data-days="1" onclick="loadChart('${tok.id}',1)">${tr.chart_24h}</button>
+      <button class="chart-btn active" data-days="7" onclick="loadChart('${tok.id}',7)">${tr.chart_7d}</button>
+      <button class="chart-btn" data-days="30" onclick="loadChart('${tok.id}',30)">${tr.chart_30d}</button>
+      <button class="chart-btn" data-days="90" onclick="loadChart('${tok.id}',90)">${tr.chart_90d}</button>
+      <button class="chart-btn" data-days="365" onclick="loadChart('${tok.id}',365)">${tr.chart_1y}</button>
     </div>
-
-    <div class="chart-container">
-      <canvas id="priceChart"></canvas>
-    </div>
-
+    <div class="chart-container"><canvas id="priceChart"></canvas></div>
     <div class="stats">
-      <div class="stat-row"><span class="stat-label">${tr.s_rank}</span><span class="stat-value">#${tok.market_cap_rank || '-'}</span></div>
+      <div class="stat-row"><span class="stat-label">${tr.s_rank}</span><span class="stat-value">#${tok.market_cap_rank||'-'}</span></div>
       <div class="stat-row"><span class="stat-label">${tr.s_mcap}</span><span class="stat-value">${formatBig(tok.market_cap)}</span></div>
       <div class="stat-row"><span class="stat-label">${tr.s_volume}</span><span class="stat-value">${formatBig(tok.total_volume)}</span></div>
       <div class="stat-row"><span class="stat-label">${tr.s_supply}</span><span class="stat-value">${formatSupply(tok.circulating_supply)}</span></div>
       <div class="stat-row"><span class="stat-label">${tr.s_total}</span><span class="stat-value">${formatSupply(tok.total_supply)}</span></div>
-      <div class="stat-row"><span class="stat-label">${tr.s_max}</span><span class="stat-value">${tok.max_supply ? formatSupply(tok.max_supply) : '∞'}</span></div>
+      <div class="stat-row"><span class="stat-label">${tr.s_max}</span><span class="stat-value">${tok.max_supply?formatSupply(tok.max_supply):'∞'}</span></div>
       <div class="stat-row"><span class="stat-label">${tr.s_ath}</span><span class="stat-value">${formatPrice(tok.ath)}</span></div>
       <div class="stat-row"><span class="stat-label">${tr.s_atl}</span><span class="stat-value">${formatPrice(tok.atl)}</span></div>
     </div>
-
     <div class="panel-actions">
       <a class="panel-btn" href="https://www.tradingview.com/chart/?symbol=BINANCE:${tvSymbol}" target="_blank">📈 ${tr.btn_tv}</a>
       <a class="panel-btn secondary" href="https://www.coingecko.com/en/coins/${tok.id}" target="_blank">🦎 ${tr.btn_cg}</a>
-    </div>
-  `;
+    </div>`;
 }
 
 async function loadChart(coinId, days) {
-  document.querySelectorAll('.chart-btn').forEach(b => {
-    b.classList.toggle('active', parseInt(b.dataset.days) === days);
-  });
-
+  document.querySelectorAll('.chart-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days) === days));
   try {
-    const url = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`;
-    const res = await fetch(url);
+    const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`);
     if (!res.ok) throw new Error('chart err');
     const data = await res.json();
     drawChart(data.prices);
-  } catch (e) {
+  } catch(e) {
     const canvas = document.getElementById('priceChart');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#a1a1aa';
-      ctx.font = '14px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(t().chart_err, canvas.width/2, canvas.height/2);
-    }
+    if (canvas) { const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#a1a1aa'; ctx.font='14px sans-serif'; ctx.textAlign='center'; ctx.fillText(t().chart_err, canvas.width/2, canvas.height/2); }
   }
 }
 
 function drawChart(prices) {
   const canvas = document.getElementById('priceChart');
   if (!canvas || !prices || prices.length === 0) return;
-
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-
-  const W = rect.width;
-  const H = rect.height;
-  ctx.clearRect(0, 0, W, H);
-
-  const padding = 15;
-  const chartW = W - padding * 2 - 50;
-  const chartH = H - padding * 2;
-  const offsetX = padding;
-
+  canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+  ctx.clearRect(0,0,W,H);
+  const padding = 15, chartW = W - padding*2 - 50, chartH = H - padding*2, offsetX = padding;
   const values = prices.map(p => p[1]);
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const range = max - min || 1;
-
-  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = padding + (chartH / 4) * i;
-    ctx.beginPath();
-    ctx.moveTo(offsetX, y);
-    ctx.lineTo(offsetX + chartW, y);
-    ctx.stroke();
-  }
-
+  const min = Math.min(...values), max = Math.max(...values), range = max - min || 1;
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) { const y = padding + (chartH/4)*i; ctx.beginPath(); ctx.moveTo(offsetX,y); ctx.lineTo(offsetX+chartW,y); ctx.stroke(); }
   const isUp = values[values.length-1] >= values[0];
-  const lineColor = isUp ? '#00ff88' : '#ff4466';
-  const fillColor = isUp ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255, 68, 102, 0.15)';
-
   ctx.beginPath();
-  prices.forEach((p, i) => {
-    const x = offsetX + (chartW / (prices.length - 1)) * i;
-    const y = padding + chartH - ((p[1] - min) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.lineTo(offsetX + chartW, padding + chartH);
-  ctx.lineTo(offsetX, padding + chartH);
-  ctx.closePath();
-  ctx.fillStyle = fillColor;
-  ctx.fill();
-
+  prices.forEach((p,i) => { const x = offsetX+(chartW/(prices.length-1))*i; const y = padding+chartH-((p[1]-min)/range)*chartH; if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+  ctx.lineTo(offsetX+chartW, padding+chartH); ctx.lineTo(offsetX, padding+chartH); ctx.closePath();
+  ctx.fillStyle = isUp ? 'rgba(0,255,136,0.15)' : 'rgba(255,68,102,0.15)'; ctx.fill();
   ctx.beginPath();
-  prices.forEach((p, i) => {
-    const x = offsetX + (chartW / (prices.length - 1)) * i;
-    const y = padding + chartH - ((p[1] - min) / range) * chartH;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.strokeStyle = lineColor;
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  ctx.fillStyle = '#a1a1aa';
-  ctx.font = '11px monospace';
-  ctx.textAlign = 'left';
-  ctx.fillText(formatPrice(max), offsetX + chartW + 5, padding + 8);
-  ctx.fillText(formatPrice(min), offsetX + chartW + 5, padding + chartH);
-  ctx.fillText(formatPrice((max+min)/2), offsetX + chartW + 5, padding + chartH/2 + 4);
+  prices.forEach((p,i) => { const x = offsetX+(chartW/(prices.length-1))*i; const y = padding+chartH-((p[1]-min)/range)*chartH; if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+  ctx.strokeStyle = isUp ? '#00ff88' : '#ff4466'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#a1a1aa'; ctx.font = '11px monospace'; ctx.textAlign = 'left';
+  ctx.fillText(formatPrice(max), offsetX+chartW+5, padding+8);
+  ctx.fillText(formatPrice(min), offsetX+chartW+5, padding+chartH);
+  ctx.fillText(formatPrice((max+min)/2), offsetX+chartW+5, padding+chartH/2+4);
 }
 
-// Eğer kayıtlı dil İngilizceyse onu uygula
-if (currentLang === 'en') {
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === 'en');
-  });
-}
+if (currentLang === 'en') { document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === 'en')); }
 applyTranslations();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "603d65c90c8540b49c54688aa5bc294d"}'></script><!-- End Cloudflare Web Analytics -->
- 
 </body>
 </html>
