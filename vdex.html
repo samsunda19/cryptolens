@@ -19,6 +19,7 @@
     padding: 15px 20px; flex-wrap: wrap; gap: 15px;
   }
   .header-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .back-btn {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
     color: #e4e4e7; padding: 8px 14px; border-radius: 8px;
@@ -26,6 +27,18 @@
     display: inline-flex; align-items: center; gap: 6px;
   }
   .back-btn:hover { background: rgba(138, 43, 226, 0.15); border-color: #8338ec; }
+  .quick-nav { display: flex; gap: 8px; }
+  .quick-nav a {
+    padding: 7px 14px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    color: #a1a1aa; text-decoration: none;
+    font-size: 0.82em; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .quick-nav a:hover { color: #c084fc; border-color: #c084fc; background: rgba(138,43,226,0.08); }
+  .quick-nav a.active { color: #c084fc; border-color: #c084fc; background: rgba(138,43,226,0.12); }
   h1 {
     font-size: 1.8em;
     background: linear-gradient(90deg, #c084fc, #00d4ff);
@@ -41,298 +54,138 @@
     color: #a1a1aa; cursor: pointer; font-weight: 600;
   }
   .lang-btn.active { background: #c084fc; color: #0f0f23; }
-  .vdex-hero {
-    text-align: center;
-    padding: 40px 20px 30px;
-    position: relative;
-  }
+  .vdex-hero { text-align: center; padding: 40px 20px 30px; position: relative; }
   .vdex-hero-video {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 20px;
-    border-radius: 32px;
-    overflow: hidden;
-    box-shadow:
-      0 0 60px rgba(138, 43, 226, 0.5),
-      0 0 100px rgba(138, 43, 226, 0.2);
-    position: relative;
-    animation: heroFloat 4s ease-in-out infinite;
+    width: 200px; height: 200px; margin: 0 auto 20px;
+    border-radius: 32px; overflow: hidden;
+    box-shadow: 0 0 60px rgba(138, 43, 226, 0.5), 0 0 100px rgba(138, 43, 226, 0.2);
+    position: relative; animation: heroFloat 4s ease-in-out infinite;
   }
-  @keyframes heroFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
+  @keyframes heroFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
   .vdex-hero-video::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
+    content: ''; position: absolute; inset: -2px;
     background: linear-gradient(135deg, #8338ec, #c084fc, #00d4ff, #8338ec);
-    background-size: 300% 300%;
-    border-radius: 34px;
-    z-index: -1;
+    background-size: 300% 300%; border-radius: 34px; z-index: -1;
     animation: borderGlow 4s linear infinite;
   }
-  @keyframes borderGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .vdex-hero-video video {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-  }
+  @keyframes borderGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  .vdex-hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .vdex-hero-title {
-    font-size: 2.2em;
-    font-weight: 800;
+    font-size: 2.2em; font-weight: 800;
     background: linear-gradient(90deg, #c084fc, #00d4ff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     margin-bottom: 8px;
   }
-  .vdex-hero-sub {
-    color: #a1a1aa;
-    font-size: 1em;
-    max-width: 500px;
-    margin: 0 auto;
-  }
+  .vdex-hero-sub { color: #a1a1aa; font-size: 1em; max-width: 500px; margin: 0 auto; }
   .powered-mini {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(138, 43, 226, 0.15);
-    border: 1px solid rgba(138, 43, 226, 0.4);
+    background: rgba(138, 43, 226, 0.15); border: 1px solid rgba(138, 43, 226, 0.4);
     padding: 6px 14px; border-radius: 20px;
-    font-size: 0.85em; font-weight: 600; color: #c084fc;
-    margin-top: 15px;
+    font-size: 0.85em; font-weight: 600; color: #c084fc; margin-top: 15px;
   }
-  .powered-mini video {
-    width: 20px; height: 20px; border-radius: 4px; object-fit: cover;
-  }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px; margin: 25px 0;
-  }
+  .powered-mini video { width: 20px; height: 20px; border-radius: 4px; object-fit: cover; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0; }
   .stat-card {
     background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px; padding: 20px; text-align: center;
-    transition: all 0.3s;
+    border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s;
   }
-  .stat-card:hover {
-    border-color: rgba(138, 43, 226, 0.4);
-    background: rgba(138, 43, 226, 0.05);
-  }
-  .stat-label {
-    font-size: 0.8em; color: #a1a1aa; text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 8px;
-  }
-  .stat-value {
-    font-size: 1.6em; font-weight: 700; font-family: monospace;
-  }
+  .stat-card:hover { border-color: rgba(138, 43, 226, 0.4); background: rgba(138, 43, 226, 0.05); }
+  .stat-label { font-size: 0.8em; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .stat-value { font-size: 1.6em; font-weight: 700; font-family: monospace; }
   .stat-value.green { color: #00ff88; }
   .stat-value.red { color: #ff4466; }
   .stat-value.purple { color: #c084fc; }
   .stat-sub { font-size: 0.75em; color: #71717a; margin-top: 4px; }
   .accordion {
-    margin: 15px 0;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s;
+    margin: 15px 0; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    overflow: hidden; transition: all 0.3s;
   }
   .accordion:hover { border-color: rgba(138, 43, 226, 0.3); }
   .accordion.open { border-color: rgba(138, 43, 226, 0.5); }
   .accordion-header {
-    padding: 18px 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    user-select: none;
-    transition: background 0.2s;
+    padding: 18px 20px; cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center;
+    user-select: none; transition: background 0.2s;
   }
   .accordion-header:hover { background: rgba(138, 43, 226, 0.08); }
   .accordion.open .accordion-header { background: rgba(138, 43, 226, 0.05); }
-  .accordion-title {
-    font-size: 1.1em;
-    font-weight: 600;
-    color: #c084fc;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .accordion-meta {
-    font-size: 0.85em;
-    color: #71717a;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .accordion-title { font-size: 1.1em; font-weight: 600; color: #c084fc; display: flex; align-items: center; gap: 10px; }
+  .accordion-meta { font-size: 0.85em; color: #71717a; display: flex; align-items: center; gap: 12px; }
   .accordion-arrow {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-    transition: all 0.3s;
-    font-size: 0.9em;
-    color: #c084fc;
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; background: rgba(255,255,255,0.05); transition: all 0.3s;
+    font-size: 0.9em; color: #c084fc;
   }
-  .accordion.open .accordion-arrow {
-    background: rgba(138, 43, 226, 0.2);
-    transform: rotate(180deg);
-  }
-  .accordion-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-  }
-  .accordion.open .accordion-body {
-    max-height: 5000px;
-  }
-  .accordion-content {
-    padding: 0 20px 20px 20px;
-  }
-  .pairs-table {
-    width: 100%; border-collapse: separate; border-spacing: 0 6px;
-  }
+  .accordion.open .accordion-arrow { background: rgba(138, 43, 226, 0.2); transform: rotate(180deg); }
+  .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .accordion.open .accordion-body { max-height: 5000px; }
+  .accordion-content { padding: 0 20px 20px 20px; }
+  .pairs-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
   .pairs-table thead th {
-    text-align: left; padding: 10px 12px;
-    color: #a1a1aa; font-size: 0.75em; text-transform: uppercase;
-    letter-spacing: 1px; font-weight: 600;
-    cursor: pointer; user-select: none;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    text-align: left; padding: 10px 12px; color: #a1a1aa; font-size: 0.75em;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+    cursor: pointer; user-select: none; border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .pairs-table thead th:hover { color: #c084fc; }
-  .pairs-table tbody tr {
-    background: rgba(255,255,255,0.02); transition: all 0.2s;
-  }
+  .pairs-table tbody tr { background: rgba(255,255,255,0.02); transition: all 0.2s; }
   .pairs-table tbody tr:hover { background: rgba(138, 43, 226, 0.08); }
   .pairs-table tbody td { padding: 12px; font-size: 0.9em; }
   .pairs-table tbody td:first-child { border-radius: 8px 0 0 8px; }
   .pairs-table tbody td:last-child { border-radius: 0 8px 8px 0; }
   .pair-symbol { font-weight: 700; }
   .pair-quote { color: #a1a1aa; font-size: 0.85em; }
-  .lev-badge {
-    display: inline-block; padding: 3px 8px;
-    background: rgba(138, 43, 226, 0.15);
-    color: #c084fc; border-radius: 4px;
-    font-size: 0.75em; font-weight: 600;
-  }
+  .lev-badge { display: inline-block; padding: 3px 8px; background: rgba(138, 43, 226, 0.15); color: #c084fc; border-radius: 4px; font-size: 0.75em; font-weight: 600; }
   .change-pos { color: #00ff88; }
   .change-neg { color: #ff4466; }
   .tv-btn {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
-    color: #e4e4e7; padding: 5px 10px; border-radius: 6px;
-    font-size: 0.75em; text-decoration: none; transition: all 0.2s;
-    display: inline-block;
+    color: #e4e4e7; padding: 5px 10px; border-radius: 6px; font-size: 0.75em;
+    text-decoration: none; transition: all 0.2s; display: inline-block;
   }
   .tv-btn:hover { background: #2962ff; border-color: #2962ff; }
-  .grid-2 {
-    display: grid; grid-template-columns: 1fr; gap: 15px;
-  }
-  @media (min-width: 900px) {
-    .grid-2 { grid-template-columns: 1fr 1fr; }
-  }
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 15px; }
+  @media (min-width: 900px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
   .leaderboard-list { display: flex; flex-direction: column; gap: 8px; }
-  .lb-item {
-    display: grid; grid-template-columns: 35px 1fr auto; align-items: center; gap: 10px;
-    padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px;
-    transition: all 0.2s;
-  }
+  .lb-item { display: grid; grid-template-columns: 35px 1fr auto; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; transition: all 0.2s; }
   .lb-item:hover { background: rgba(138, 43, 226, 0.08); }
-  .lb-rank {
-    width: 30px; height: 30px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.85em;
-    background: rgba(255,255,255,0.05);
-  }
+  .lb-rank { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85em; background: rgba(255,255,255,0.05); }
   .lb-rank.top1 { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #0a0a1a; }
   .lb-rank.top2 { background: linear-gradient(135deg, #c0c0c0, #808080); color: #0a0a1a; }
   .lb-rank.top3 { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
   .lb-info { min-width: 0; }
-  .lb-tier {
-    font-size: 0.75em; color: #c084fc; text-transform: uppercase;
-    letter-spacing: 0.5px; font-weight: 600;
-  }
-  .lb-addr {
-    font-family: monospace; font-size: 0.85em; color: #e4e4e7;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .lb-points {
-    font-family: monospace; font-weight: 700; color: #00ff88; font-size: 0.85em;
-  }
+  .lb-tier { font-size: 0.75em; color: #c084fc; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .lb-addr { font-family: monospace; font-size: 0.85em; color: #e4e4e7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-points { font-family: monospace; font-weight: 700; color: #00ff88; font-size: 0.85em; }
   .competitions-list { display: flex; flex-direction: column; gap: 12px; }
-  .comp-card {
-    background: rgba(138, 43, 226, 0.05);
-    border: 1px solid rgba(138, 43, 226, 0.2);
-    border-radius: 10px; padding: 15px;
-    transition: all 0.2s;
-  }
+  .comp-card { background: rgba(138, 43, 226, 0.05); border: 1px solid rgba(138, 43, 226, 0.2); border-radius: 10px; padding: 15px; transition: all 0.2s; }
   .comp-card:hover { border-color: rgba(138, 43, 226, 0.5); }
   .comp-name { font-weight: 700; margin-bottom: 6px; }
-  .comp-status {
-    display: inline-block; padding: 2px 8px; border-radius: 12px;
-    font-size: 0.7em; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+  .comp-status { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.7em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .comp-status.ended { background: rgba(255,255,255,0.05); color: #71717a; }
   .comp-status.active { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
-  .comp-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-    margin-top: 10px; font-size: 0.85em;
-  }
+  .comp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; font-size: 0.85em; }
   .comp-stat-label { color: #a1a1aa; font-size: 0.8em; margin-bottom: 2px; }
   .comp-stat-value { font-weight: 600; }
   .ann-list { display: flex; flex-direction: column; gap: 10px; }
-  .ann-item {
-    padding: 12px; background: rgba(255,255,255,0.02);
-    border-radius: 8px; border-left: 3px solid #c084fc;
-    transition: all 0.2s;
-  }
+  .ann-item { padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px; border-left: 3px solid #c084fc; transition: all 0.2s; }
   .ann-item.listings { border-left-color: #00ff88; }
   .ann-item.updates { border-left-color: #00d4ff; }
-  .ann-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
-  }
+  .ann-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px; }
   .ann-title { font-weight: 600; font-size: 0.95em; }
-  .ann-cat {
-    padding: 2px 8px; border-radius: 12px;
-    font-size: 0.7em; font-weight: 600; text-transform: uppercase;
-  }
+  .ann-cat { padding: 2px 8px; border-radius: 12px; font-size: 0.7em; font-weight: 600; text-transform: uppercase; }
   .ann-cat.listings { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
   .ann-cat.updates { background: rgba(0, 212, 255, 0.15); color: #00d4ff; }
   .ann-date { font-size: 0.8em; color: #71717a; }
   .loading { text-align: center; padding: 30px; color: #a1a1aa; }
   .error { text-align: center; padding: 20px; color: #ff4466; }
-  .vdex-cta {
-    text-align: center; margin: 30px 0;
-    padding: 30px; background: rgba(138, 43, 226, 0.05);
-    border: 1px solid rgba(138, 43, 226, 0.2); border-radius: 16px;
-  }
-  .vdex-cta-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 30px;
-    background: linear-gradient(135deg, #8338ec, #c084fc);
-    color: white; text-decoration: none; border-radius: 8px;
-    font-weight: 700; transition: all 0.2s; margin-top: 12px;
-  }
-  .vdex-cta-btn video {
-    width: 24px; height: 24px; border-radius: 4px; object-fit: cover;
-  }
+  .vdex-cta { text-align: center; margin: 30px 0; padding: 30px; background: rgba(138, 43, 226, 0.05); border: 1px solid rgba(138, 43, 226, 0.2); border-radius: 16px; }
+  .vdex-cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 30px; background: linear-gradient(135deg, #8338ec, #c084fc); color: white; text-decoration: none; border-radius: 8px; font-weight: 700; transition: all 0.2s; margin-top: 12px; }
+  .vdex-cta-btn video { width: 24px; height: 24px; border-radius: 4px; object-fit: cover; }
   .vdex-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4); }
-  footer {
-    text-align: center; padding: 30px; color: #71717a; font-size: 0.85em;
-    border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px;
-  }
-  .footer-powered {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: #c084fc; font-weight: 600; margin-top: 6px;
-  }
-  .footer-powered video {
-    width: 24px; height: 24px; border-radius: 4px; object-fit: cover;
-  }
+  footer { text-align: center; padding: 30px; color: #71717a; font-size: 0.85em; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
+  .footer-powered { display: inline-flex; align-items: center; gap: 8px; color: #c084fc; font-weight: 600; margin-top: 6px; }
+  .footer-powered video { width: 24px; height: 24px; border-radius: 4px; object-fit: cover; }
   @media (max-width: 600px) {
     h1 { font-size: 1.4em; }
     .stat-value { font-size: 1.3em; }
@@ -343,6 +196,7 @@
     .hide-mobile { display: none; }
     .vdex-hero-video { width: 140px; height: 140px; }
     .vdex-hero-title { font-size: 1.6em; }
+    .quick-nav { display: none; }
   }
 </style>
 </head>
@@ -350,12 +204,19 @@
 <div class="container">
   <header>
     <div class="header-left">
-      <a href="index.html" class="back-btn"><span>←</span> <span data-key="back">Ana Sayfa</span></a>
+      <a href="index.html" class="back-btn">← <span data-key="back">Ana Sayfa</span></a>
       <h1><span data-key="page_title">VDEX Verileri</span></h1>
     </div>
-    <div class="lang-switch">
-      <button class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    <div class="header-right">
+      <nav class="quick-nav">
+        <a href="filters.html">Filtreler</a>
+        <a href="vdex.html" class="active">VDEX</a>
+        <a href="funding.html">Funding</a>
+      </nav>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="tr" onclick="setLang('tr')">TR</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </header>
 
@@ -437,13 +298,10 @@
       </div>
       <div class="accordion-body">
         <div class="accordion-content">
-          <div class="competitions-list" id="competitionsList">
-            <div class="loading">⏳</div>
-          </div>
+          <div class="competitions-list" id="competitionsList"><div class="loading">⏳</div></div>
         </div>
       </div>
     </div>
-
     <div class="accordion" id="acc-lb">
       <div class="accordion-header" onclick="toggleAcc('acc-lb')">
         <div class="accordion-title">🥇 <span data-key="t_lb">Top Trader'lar</span></div>
@@ -454,9 +312,7 @@
       </div>
       <div class="accordion-body">
         <div class="accordion-content">
-          <div class="leaderboard-list" id="leaderboardList">
-            <div class="loading">⏳</div>
-          </div>
+          <div class="leaderboard-list" id="leaderboardList"><div class="loading">⏳</div></div>
         </div>
       </div>
     </div>
@@ -472,9 +328,7 @@
     </div>
     <div class="accordion-body">
       <div class="accordion-content">
-        <div class="ann-list" id="announcementsList">
-          <div class="loading">⏳</div>
-        </div>
+        <div class="ann-list" id="announcementsList"><div class="loading">⏳</div></div>
       </div>
     </div>
   </div>
@@ -548,10 +402,7 @@ const I18N = {
 };
 
 let currentLang = 'tr';
-try {
-  const saved = localStorage.getItem('cryptolens_lang');
-  if (saved === 'en') currentLang = 'en';
-} catch(e) {}
+try { const saved = localStorage.getItem('cryptolens_lang'); if (saved === 'en') currentLang = 'en'; } catch(e) {}
 
 let pairsData = [];
 let sortKey = 'volume';
@@ -567,22 +418,14 @@ async function vdexFetch(path) {
 }
 
 function t() { return I18N[currentLang]; }
-
-function toggleAcc(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('open');
-}
+function toggleAcc(id) { document.getElementById(id).classList.toggle('open'); }
 
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === lang);
-  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   const tr = t();
-  document.querySelectorAll('[data-key]').forEach(el => {
-    if (tr[el.dataset.key]) el.textContent = tr[el.dataset.key];
-  });
+  document.querySelectorAll('[data-key]').forEach(el => { if (tr[el.dataset.key]) el.textContent = tr[el.dataset.key]; });
   try { localStorage.setItem('cryptolens_lang', lang); } catch(e) {}
   renderPairs();
   renderCompetitions(window._comps || []);
@@ -592,9 +435,7 @@ function setLang(lang) {
 }
 
 if (currentLang === 'en') {
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === 'en');
-  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === 'en'));
   setTimeout(() => setLang('en'), 0);
 }
 
@@ -605,7 +446,6 @@ function fmtPrice(p) {
   if (p < 1) return '$' + p.toFixed(4);
   return '$' + p.toLocaleString('en-US', {maximumFractionDigits: 2});
 }
-
 function fmtBig(m) {
   if (m == null) return '-';
   if (m >= 1e9) return '$' + (m/1e9).toFixed(2) + 'B';
@@ -613,44 +453,22 @@ function fmtBig(m) {
   if (m >= 1e3) return '$' + (m/1e3).toFixed(2) + 'K';
   return '$' + m.toFixed(2);
 }
-
-function shortAddr(a) {
-  if (!a) return '-';
-  return a.slice(0, 6) + '...' + a.slice(-4);
-}
-
+function shortAddr(a) { if (!a) return '-'; return a.slice(0, 6) + '...' + a.slice(-4); }
 function fmtDate(d) {
   if (!d) return '';
-  try {
-    const dt = new Date(d);
-    return dt.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US',
-      { year: 'numeric', month: 'short', day: 'numeric' });
-  } catch(e) { return d; }
+  try { return new Date(d).toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' }); }
+  catch(e) { return d; }
 }
 
 function updateMetas() {
   const tr = t();
-  if (pairsData.length > 0) {
-    document.getElementById('pairsMeta').textContent = tr.pairs_meta(pairsData.length);
-  }
-  if (window._comps?.length) {
-    document.getElementById('compMeta').textContent = tr.comp_meta(window._comps.length);
-  }
-  if (window._lb?.length) {
-    document.getElementById('lbMeta').textContent = tr.lb_meta;
-  }
-  if (window._ann?.length) {
-    document.getElementById('annMeta').textContent = tr.ann_meta(window._ann.length);
-  }
+  if (pairsData.length > 0) document.getElementById('pairsMeta').textContent = tr.pairs_meta(pairsData.length);
+  if (window._comps?.length) document.getElementById('compMeta').textContent = tr.comp_meta(window._comps.length);
+  if (window._lb?.length) document.getElementById('lbMeta').textContent = tr.lb_meta;
+  if (window._ann?.length) document.getElementById('annMeta').textContent = tr.ann_meta(window._ann.length);
 }
 
-async function fetchAll() {
-  loadPairs();
-  loadVMM();
-  loadCompetitions();
-  loadLeaderboard();
-  loadAnnouncements();
-}
+async function fetchAll() { loadPairs(); loadVMM(); loadCompetitions(); loadLeaderboard(); loadAnnouncements(); }
 
 async function loadPairs() {
   try {
@@ -658,31 +476,23 @@ async function loadPairs() {
     if (j.code !== 0) throw new Error('err');
     pairsData = (j.data || []).filter(p => !p.isDisabled);
     document.getElementById('statPairs').textContent = pairsData.length;
-    updateMetas();
-    renderPairs();
+    updateMetas(); renderPairs();
   } catch (e) {
     document.getElementById('statPairs').textContent = '-';
-    document.getElementById('pairsBody').innerHTML =
-      `<tr><td colspan="7"><div class="error">⚠️ ${t().err}</div></td></tr>`;
+    document.getElementById('pairsBody').innerHTML = `<tr><td colspan="7"><div class="error">⚠️ ${t().err}</div></td></tr>`;
   }
 }
 
 async function loadVMM() {
   try {
-    const [jVol, jApr] = await Promise.all([
-      vdexFetch('v1/vmm/volume?timeframe=30d'),
-      vdexFetch('v2/vmm/apr?timeframe=30d')
-    ]);
-
+    const [jVol, jApr] = await Promise.all([vdexFetch('v1/vmm/volume?timeframe=30d'), vdexFetch('v2/vmm/apr?timeframe=30d')]);
     const vol = jVol.data?.volume;
     document.getElementById('statVolume').textContent = vol != null ? fmtBig(vol) : '-';
-
     const apr = jApr.data?.selected_period;
     const pnl = jApr.data?.pnl;
     const aprEl = document.getElementById('statApr');
     aprEl.textContent = apr != null ? apr.toFixed(2) + '%' : '-';
     aprEl.className = 'stat-value ' + (apr >= 0 ? 'green' : 'red');
-
     const pnlEl = document.getElementById('statPnl');
     pnlEl.textContent = pnl != null ? '$' + pnl.toLocaleString('en-US', {maximumFractionDigits:0}) : '-';
     pnlEl.className = 'stat-value ' + (pnl >= 0 ? 'green' : 'red');
@@ -696,37 +506,22 @@ async function loadVMM() {
 async function loadCompetitions() {
   try {
     const j = await vdexFetch('v1/competitions/?type=trading');
-    window._comps = j.data || [];
-    updateMetas();
-    renderCompetitions(window._comps);
-  } catch (e) {
-    document.getElementById('competitionsList').innerHTML =
-      `<div class="error">⚠️ ${t().err}</div>`;
-  }
+    window._comps = j.data || []; updateMetas(); renderCompetitions(window._comps);
+  } catch (e) { document.getElementById('competitionsList').innerHTML = `<div class="error">⚠️ ${t().err}</div>`; }
 }
 
 async function loadLeaderboard() {
   try {
     const j = await vdexFetch('v1/public/user-leaderboard?page=1&page_size=10');
-    window._lb = j.data?.participants || [];
-    updateMetas();
-    renderLeaderboard(window._lb);
-  } catch (e) {
-    document.getElementById('leaderboardList').innerHTML =
-      `<div class="error">⚠️ ${t().err}</div>`;
-  }
+    window._lb = j.data?.participants || []; updateMetas(); renderLeaderboard(window._lb);
+  } catch (e) { document.getElementById('leaderboardList').innerHTML = `<div class="error">⚠️ ${t().err}</div>`; }
 }
 
 async function loadAnnouncements() {
   try {
     const j = await vdexFetch('v1/public/announcements?limit=8&offset=0');
-    window._ann = j.data?.announcements || [];
-    updateMetas();
-    renderAnnouncements(window._ann);
-  } catch (e) {
-    document.getElementById('announcementsList').innerHTML =
-      `<div class="error">⚠️ ${t().err}</div>`;
-  }
+    window._ann = j.data?.announcements || []; updateMetas(); renderAnnouncements(window._ann);
+  } catch (e) { document.getElementById('announcementsList').innerHTML = `<div class="error">⚠️ ${t().err}</div>`; }
 }
 
 function sortPairs(key) {
@@ -739,16 +534,13 @@ function getSorted() {
   return [...pairsData].sort((a, b) => {
     let va, vb;
     switch(sortKey) {
-      case 'symbol':
-        va = (a.id || '').toLowerCase(); vb = (b.id || '').toLowerCase();
-        return sortDir === 'desc' ? vb.localeCompare(va) : va.localeCompare(vb);
+      case 'symbol': va = (a.id||'').toLowerCase(); vb = (b.id||'').toLowerCase(); return sortDir === 'desc' ? vb.localeCompare(va) : va.localeCompare(vb);
       case 'price': va = +a.lastPrice||0; vb = +b.lastPrice||0; break;
       case 'change':
         va = parseFloat((a.twentyFourHourPriceChange||'0').replace('%','').replace('+',''));
         vb = parseFloat((b.twentyFourHourPriceChange||'0').replace('%','').replace('+',''));
         break;
-      case 'volume':
-      default: va = +a.twentyFourHourVolume||0; vb = +b.twentyFourHourVolume||0;
+      case 'volume': default: va = +a.twentyFourHourVolume||0; vb = +b.twentyFourHourVolume||0;
     }
     return sortDir === 'desc' ? vb - va : va - vb;
   });
@@ -757,113 +549,69 @@ function getSorted() {
 function renderPairs() {
   const sorted = getSorted();
   const tbody = document.getElementById('pairsBody');
-  if (sorted.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="loading">${t().no_data}</div></td></tr>`;
-    return;
-  }
-
+  if (sorted.length === 0) { tbody.innerHTML = `<tr><td colspan="7"><div class="loading">${t().no_data}</div></td></tr>`; return; }
   tbody.innerHTML = sorted.map(p => {
     const change = parseFloat((p.twentyFourHourPriceChange||'0').replace('%','').replace('+',''));
     const cls = change >= 0 ? 'change-pos' : 'change-neg';
     const tvSymbol = (p.baseToken||'') + (p.quoteToken||'USDT');
-    return `
-      <tr>
-        <td>
-          <span class="pair-symbol">${p.baseToken}</span>
-          <span class="pair-quote">/${p.quoteToken}</span>
-        </td>
-        <td>${fmtPrice(+p.lastPrice)}</td>
-        <td class="${cls}">${p.twentyFourHourPriceChange || '-'}</td>
-        <td>${fmtBig(+p.twentyFourHourVolume)}</td>
-        <td class="hide-mobile"><span class="lev-badge">${p.config?.maxLeverage || '-'}x</span></td>
-        <td class="hide-mobile">${p.fundingRate != null ? (p.fundingRate*100).toFixed(4)+'%' : '-'}</td>
-        <td>
-          <a class="tv-btn" href="https://www.tradingview.com/chart/?symbol=BINANCE:${tvSymbol}" target="_blank">📈 TV</a>
-        </td>
-      </tr>
-    `;
+    return `<tr>
+      <td><span class="pair-symbol">${p.baseToken}</span><span class="pair-quote">/${p.quoteToken}</span></td>
+      <td>${fmtPrice(+p.lastPrice)}</td>
+      <td class="${cls}">${p.twentyFourHourPriceChange || '-'}</td>
+      <td>${fmtBig(+p.twentyFourHourVolume)}</td>
+      <td class="hide-mobile"><span class="lev-badge">${p.config?.maxLeverage || '-'}x</span></td>
+      <td class="hide-mobile">${p.fundingRate != null ? (p.fundingRate*100).toFixed(4)+'%' : '-'}</td>
+      <td><a class="tv-btn" href="https://www.tradingview.com/chart/?symbol=BINANCE:${tvSymbol}" target="_blank">📈 TV</a></td>
+    </tr>`;
   }).join('');
 }
 
 function renderCompetitions(comps) {
   const el = document.getElementById('competitionsList');
-  if (!comps || comps.length === 0) {
-    el.innerHTML = `<div class="loading">${t().no_data}</div>`;
-    return;
-  }
+  if (!comps || comps.length === 0) { el.innerHTML = `<div class="loading">${t().no_data}</div>`; return; }
   el.innerHTML = comps.slice(0, 5).map(c => {
     const isActive = c.status?.toUpperCase() !== 'ENDED';
-    return `
-      <div class="comp-card">
-        <div style="display: flex; justify-content: space-between; align-items: start; gap: 8px; flex-wrap: wrap;">
-          <div class="comp-name">${c.name || '-'}</div>
-          <span class="comp-status ${isActive ? 'active' : 'ended'}">
-            ${isActive ? t().active : t().ended}
-          </span>
-        </div>
-        <div class="comp-stats">
-          <div>
-            <div class="comp-stat-label">${t().prize}</div>
-            <div class="comp-stat-value" style="color:#ffd700;">${c.prize || '-'}</div>
-          </div>
-          <div>
-            <div class="comp-stat-label">${t().participants}</div>
-            <div class="comp-stat-value">${c.total_participants || 0}</div>
-          </div>
-          <div>
-            <div class="comp-stat-label">${t().volume}</div>
-            <div class="comp-stat-value">${fmtBig(+c.trading_volume)}</div>
-          </div>
-        </div>
+    return `<div class="comp-card">
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:8px;flex-wrap:wrap;">
+        <div class="comp-name">${c.name || '-'}</div>
+        <span class="comp-status ${isActive ? 'active' : 'ended'}">${isActive ? t().active : t().ended}</span>
       </div>
-    `;
+      <div class="comp-stats">
+        <div><div class="comp-stat-label">${t().prize}</div><div class="comp-stat-value" style="color:#ffd700;">${c.prize || '-'}</div></div>
+        <div><div class="comp-stat-label">${t().participants}</div><div class="comp-stat-value">${c.total_participants || 0}</div></div>
+        <div><div class="comp-stat-label">${t().volume}</div><div class="comp-stat-value">${fmtBig(+c.trading_volume)}</div></div>
+      </div>
+    </div>`;
   }).join('');
 }
 
 function renderLeaderboard(list) {
   const el = document.getElementById('leaderboardList');
-  if (!list || list.length === 0) {
-    el.innerHTML = `<div class="loading">${t().no_data}</div>`;
-    return;
-  }
+  if (!list || list.length === 0) { el.innerHTML = `<div class="loading">${t().no_data}</div>`; return; }
   el.innerHTML = list.slice(0, 10).map(p => {
     const rankCls = p.rank === 1 ? 'top1' : p.rank === 2 ? 'top2' : p.rank === 3 ? 'top3' : '';
-    return `
-      <div class="lb-item">
-        <div class="lb-rank ${rankCls}">${p.rank}</div>
-        <div class="lb-info">
-          <div class="lb-tier">🦈 ${p.tier || ''}</div>
-          <div class="lb-addr">${shortAddr(p.wallet_address)}</div>
-        </div>
-        <div class="lb-points">${(p.points||0).toLocaleString()}</div>
-      </div>
-    `;
+    return `<div class="lb-item">
+      <div class="lb-rank ${rankCls}">${p.rank}</div>
+      <div class="lb-info"><div class="lb-tier">🦈 ${p.tier || ''}</div><div class="lb-addr">${shortAddr(p.wallet_address)}</div></div>
+      <div class="lb-points">${(p.points||0).toLocaleString()}</div>
+    </div>`;
   }).join('');
 }
 
 function renderAnnouncements(list) {
   const el = document.getElementById('announcementsList');
-  if (!list || list.length === 0) {
-    el.innerHTML = `<div class="loading">${t().no_data}</div>`;
-    return;
-  }
+  if (!list || list.length === 0) { el.innerHTML = `<div class="loading">${t().no_data}</div>`; return; }
   el.innerHTML = list.slice(0, 8).map(a => {
     const cat = (a.category || 'updates').toLowerCase();
-    return `
-      <div class="ann-item ${cat}">
-        <div class="ann-header">
-          <div class="ann-title">${a.title || '-'}</div>
-          <span class="ann-cat ${cat}">${a.category || ''}</span>
-        </div>
-        <div class="ann-date">${fmtDate(a.published_at)}</div>
-      </div>
-    `;
+    return `<div class="ann-item ${cat}">
+      <div class="ann-header"><div class="ann-title">${a.title || '-'}</div><span class="ann-cat ${cat}">${a.category || ''}</span></div>
+      <div class="ann-date">${fmtDate(a.published_at)}</div>
+    </div>`;
   }).join('');
 }
 
 fetchAll();
 </script>
-
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "603d65c90c8540b49c54688aa5bc294d"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
