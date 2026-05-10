@@ -56,7 +56,7 @@
   nav a {
     color: var(--text-dim);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     margin-left: 24px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -82,7 +82,7 @@
 
   .hero p {
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 15px;
     font-family: 'IBM Plex Mono', monospace;
   }
 
@@ -103,7 +103,7 @@
     padding: 8px 14px;
     color: var(--text);
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
     width: 220px;
     outline: none;
     transition: border-color 0.2s;
@@ -118,7 +118,7 @@
     padding: 8px 14px;
     color: var(--text-dim);
     font-family: 'Syne', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     text-transform: uppercase;
@@ -138,7 +138,7 @@
     padding: 8px 18px;
     color: #000;
     font-family: 'Syne', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     cursor: pointer;
     text-transform: uppercase;
@@ -156,7 +156,7 @@
     gap: 24px;
     background: rgba(0,0,0,0.3);
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
+    font-size: 14px;
     border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
   }
@@ -194,7 +194,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -215,7 +215,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   thead tr {
@@ -225,7 +225,7 @@
   th {
     text-align: left;
     padding: 10px 12px;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -252,7 +252,7 @@
   td {
     padding: 11px 12px;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
     white-space: nowrap;
   }
 
@@ -262,7 +262,7 @@
     gap: 8px;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
     color: #fff;
   }
 
@@ -289,7 +289,7 @@
     display: inline-block;
     padding: 3px 8px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
   }
 
@@ -309,7 +309,7 @@
 
   .rate-val.na {
     color: var(--text-dim);
-    font-size: 11px;
+    font-size: 14px;
   }
 
   /* BEST RATE HIGHLIGHT */
@@ -355,7 +355,7 @@
     padding: 60px 32px;
     color: var(--text-dim);
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   /* STATS CARDS */
@@ -400,7 +400,7 @@
   }
 
   .stat-sub {
-    font-size: 11px;
+    font-size: 14px;
     color: var(--text-dim);
     margin-top: 3px;
     font-family: 'IBM Plex Mono', monospace;
@@ -410,7 +410,7 @@
   footer {
     padding: 16px 32px;
     border-top: 1px solid var(--border);
-    font-size: 11px;
+    font-size: 14px;
     color: var(--text-dim);
     font-family: 'IBM Plex Mono', monospace;
     display: flex;
@@ -437,9 +437,11 @@
 <body>
 
 <header>
-  <div class="logo">Crypto<span>Lens</span></div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:7px 14px;border-radius:8px;color:#c9d4e0;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='#c9d4e0'">← Ana Sayfa</a>
+    <div class="logo">Crypto<span>Lens</span></div>
+  </div>
   <nav>
-    <a href="index.html">Ana Sayfa</a>
     <a href="filters.html">Filtreler</a>
     <a href="vdex.html">VDEX</a>
     <a href="funding.html" class="active">Funding</a>
@@ -667,7 +669,7 @@ function fmtRate(val) {
   const pct = (val * 100).toFixed(4);
   const cls = val > 0.00001 ? 'pos' : val < -0.00001 ? 'neg' : 'zero';
   const sign = val > 0.00001 ? '+' : '';
-  return `<span class="rate-val ${cls}">${sign}${pct}%</span>`;
+  return `<span class="rate-val ${cls}" style="font-size:15px;font-weight:800">${sign}${pct}%</span>`;
 }
 
 // ── RENDER TABLE ─────────────────────────────────────────
