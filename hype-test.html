@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hyperliquid API Test</title>
+<style>
+  body { font-family: monospace; background: #0a0a1a; color: #e4e4e7; padding: 20px; }
+  pre { background: #1a1a2e; padding: 15px; border-radius: 8px; overflow: auto; max-height: 600px; }
+  h2 { color: #00d4ff; }
+  .ok { color: #00ff88; }
+  .err { color: #ff4466; }
+  button { background: #00d4ff; color: #0a0a1a; border: none; padding: 10px 20px; font-weight: 700; border-radius: 6px; cursor: pointer; margin: 10px 5px 10px 0; }
+</style>
+</head>
+<body>
+<h1>🧪 Hyperliquid API Testi</h1>
+<button onclick="test()">API'i Test Et</button>
+<div id="result">Henüz test edilmedi.</div>
+
+<script>
+async function test() {
+  const r = document.getElementById('result');
+  r.innerHTML = '<p>⏳ İstek gönderiliyor...</p>';
+
+  try {
+    const response = await fetch('https://api.hyperliquid.xyz/info', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type: 'metaAndAssetCtxs'})
+    });
+
+    if (!response.ok) {
+      r.innerHTML = `<p class="err">❌ HTTP ${response.status}</p>`;
+      return;
+    }
+
+    const data = await response.json();
+    const meta = data[0];      // universe (coin metadata)
+    const assets = data[1];    // funding rates, prices, vb.
+
+    // İlk 10 coin'in funding rate'lerini göster
+    let html = `<h2 class="ok">✅ Çalışıyor! Toplam ${meta.universe.length} coin</h2>`;
+    html += `<h2>🔝 İlk 10 coin'in funding rate'leri:</h2>`;
+    html += `<table style="width:100%; border-collapse: collapse;">`;
+    html += `<tr style="border-bottom:1px solid #333;">
+              <th style="text-align:left;padding:8px;">Coin</th>
+              <th style="text-align:right;padding:8px;">Mark Price</th>
+              <th style="text-align:right;padding:8px;">Funding Rate (8h)</th>
+              <th style="text-align:right;padding:8px;">Funding Rate (Annual)</th>
+              <th style="text-align:right;padding:8px;">Open Interest</th>
+            </tr>`;
+
+    for (let i = 0; i < Math.min(10, meta.universe.length); i++) {
+      const coin = meta.universe[i].name;
+      const ctx = assets[i];
+      const fr = parseFloat(ctx.funding) * 100;       // % cinsinden
+      const fr8h = fr;                                 // 1 saatlik gösterilse de annualize edelim
+      const annual = fr * 24 * 365;                    // yıllık
+      const color = fr >= 0 ? '#00ff88' : '#ff4466';
+
+      html += `<tr style="border-bottom:1px solid #222;">
+                <td style="padding:8px;font-weight:700;">${coin}</td>
+                <td style="text-align:right;padding:8px;">$${parseFloat(ctx.markPx).toLocaleString()}</td>
+                <td style="text-align:right;padding:8px;color:${color};">${fr.toFixed(4)}%</td>
+                <td style="text-align:right;padding:8px;color:${color};">${annual.toFixed(2)}%</td>
+                <td style="text-align:right;padding:8px;">$${parseFloat(ctx.openInterest).toLocaleString()}</td>
+              </tr>`;
+    }
+    html += `</table>`;
+    html += `<h2>📋 Ham veri (debug):</h2>`;
+    html += `<pre>İlk coin metadata: ${JSON.stringify(meta.universe[0], null, 2)}</pre>`;
+    html += `<pre>İlk coin asset ctx: ${JSON.stringify(assets[0], null, 2)}</pre>`;
+
+    r.innerHTML = html;
+  } catch (e) {
+    r.innerHTML = `<p class="err">❌ Hata: ${e.message}</p>`;
+  }
+}
+</script>
+</body>
+</html>
