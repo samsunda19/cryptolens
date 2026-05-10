@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funding Rate Karşılaştırma | CryptoLens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --surface: #0d1117;
+    --border: #1e2a36;
+    --accent: #00e5ff;
+    --green: #00ff88;
+    --red: #ff3366;
+    --yellow: #ffd700;
+    --text: #c9d4e0;
+    --text-dim: #4a5a6a;
+    --vdex: #7c5cfc;
+    --hl: #ff6b35;
+    --edgex: #00e5ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(13,17,23,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+  .logo span { color: var(--accent); }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover, nav a.active { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 40px 32px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .hero h1 span { color: var(--accent); }
+
+  .hero p {
+    color: var(--text-dim);
+    font-size: 14px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* CONTROLS */
+  .controls {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .search-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--accent); }
+  .search-box::placeholder { color: var(--text-dim); }
+
+  .sort-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .sort-btn:hover, .sort-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.05);
+  }
+
+  .refresh-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    color: #000;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+    margin-left: auto;
+  }
+  .refresh-btn:hover { opacity: 0.85; }
+  .refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* STATUS BAR */
+  .status-bar {
+    padding: 10px 32px;
+    display: flex;
+    gap: 24px;
+    background: rgba(0,0,0,0.3);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-dim);
+  }
+  .status-dot.ok { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .status-dot.loading { background: var(--yellow); animation: pulse 1s infinite; }
+  .status-dot.err { background: var(--red); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* EXCHANGE LEGEND */
+  .legend {
+    padding: 14px 32px;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  /* TABLE */
+  .table-wrap {
+    padding: 24px 32px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    border-bottom: 2px solid var(--border);
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { color: var(--accent); }
+
+  th.ex-header {
+    text-align: center;
+    border-left: 1px solid var(--border);
+    padding: 10px 16px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(30,42,54,0.5);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: rgba(0,229,255,0.03); }
+
+  td {
+    padding: 11px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .coin-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+  }
+
+  .coin-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e2a36, #2a3a4a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  td.ex-cell {
+    text-align: center;
+    border-left: 1px solid rgba(30,42,54,0.5);
+  }
+
+  .rate-val {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .rate-val.pos {
+    color: var(--green);
+    background: rgba(0,255,136,0.08);
+  }
+
+  .rate-val.neg {
+    color: var(--red);
+    background: rgba(255,51,102,0.08);
+  }
+
+  .rate-val.zero {
+    color: var(--text-dim);
+  }
+
+  .rate-val.na {
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+
+  /* BEST RATE HIGHLIGHT */
+  .best-rate {
+    position: relative;
+  }
+  .best-rate::after {
+    content: '★';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    font-size: 8px;
+    color: var(--yellow);
+  }
+
+  /* INTERVAL BADGE */
+  .interval {
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* LOADING STATE */
+  .skeleton {
+    display: inline-block;
+    width: 60px;
+    height: 20px;
+    background: linear-gradient(90deg, var(--border) 25%, #1e3040 50%, var(--border) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+    border-radius: 4px;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* EMPTY / ERROR */
+  .empty-state {
+    text-align: center;
+    padding: 60px 32px;
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+  }
+
+  /* STATS CARDS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    padding: 16px 32px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stat-label .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+
+  .stat-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 16px 32px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #last-update { color: var(--text-dim); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2a3a4a; }
+
+  @media (max-width: 768px) {
+    header { padding: 12px 16px; }
+    .hero, .controls, .table-wrap, .stats-row .stat-card { padding-left: 16px; padding-right: 16px; }
+    .stats-row { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Crypto<span>Lens</span></div>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="filters.html">Filtreler</a>
+    <a href="vdex.html">VDEX</a>
+    <a href="funding.html" class="active">Funding</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Funding Rate <span>Karşılaştırma</span></h1>
+  <p>VDEX · Hyperliquid · Edgex — anlık funding rate karşılaştırması</p>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-label"><span class="dot" style="background:var(--vdex)"></span>VDEX</div>
+    <div class="stat-val" id="stat-vdex">—</div>
+    <div class="stat-sub">coin listelendi</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label"><span class="dot" style="background:var(--hl)"></span>Hyperliquid</div>
+    <div class="stat-val" id="stat-hl">—</div>
+    <div class="stat-sub">coin listelendi</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label"><span class="dot" style="background:var(--edgex)"></span>Edgex</div>
+    <div class="stat-val" id="stat-edgex">—</div>
+    <div class="stat-sub">coin listelendi</div>
+  </div>
+</div>
+
+<div class="controls">
+  <input type="text" class="search-box" id="search" placeholder="Coin ara... (BTC, ETH...)">
+  <button class="sort-btn active" id="sort-coin" onclick="setSort('coin')">Coin ↕</button>
+  <button class="sort-btn" id="sort-hl" onclick="setSort('hl')">HL Rate ↕</button>
+  <button class="sort-btn" id="sort-edgex" onclick="setSort('edgex')">Edgex Rate ↕</button>
+  <button class="sort-btn" id="sort-vdex" onclick="setSort('vdex')">VDEX Rate ↕</button>
+  <button class="refresh-btn" id="refresh-btn" onclick="loadAll()">⟳ Yenile</button>
+</div>
+
+<div class="status-bar">
+  <div class="status-item">
+    <div class="status-dot" id="dot-vdex"></div>
+    <span id="status-vdex">VDEX: bekleniyor</span>
+  </div>
+  <div class="status-item">
+    <div class="status-dot" id="dot-hl"></div>
+    <span id="status-hl">Hyperliquid: bekleniyor</span>
+  </div>
+  <div class="status-item">
+    <div class="status-dot" id="dot-edgex"></div>
+    <span id="status-edgex">Edgex: bekleniyor</span>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-color" style="background:var(--vdex)"></div> VDEX (8h)</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--hl)"></div> Hyperliquid (1h)</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--edgex)"></div> Edgex (4h)</div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="sortable" onclick="setSort('coin')">#</th>
+        <th class="sortable" onclick="setSort('coin')">Coin</th>
+        <th class="ex-header" style="color:var(--vdex)">VDEX <span style="font-weight:400;text-transform:none;font-size:10px">(8h)</span></th>
+        <th class="ex-header" style="color:var(--hl)">Hyperliquid <span style="font-weight:400;text-transform:none;font-size:10px">(1h)</span></th>
+        <th class="ex-header" style="color:var(--edgex)">Edgex <span style="font-weight:400;text-transform:none;font-size:10px">(4h)</span></th>
+        <th class="ex-header">En Yüksek</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <tr><td colspan="6"><div class="empty-state">Veriler yükleniyor...</div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <span>CryptoLens · Funding Rate Tracker</span>
+  <span id="last-update">—</span>
+</footer>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+const VDEX_PROXY   = 'https://vdex-proxy.samsunda-yasamak.workers.dev';
+const EDGEX_PROXY  = 'https://edgex-proxy.samsunda-yasamak.workers.dev';
+const HL_API       = 'https://api.hyperliquid.xyz/info';
+
+// ── STATE ───────────────────────────────────────────────
+let vdexData   = {};  // symbol → fundingRate
+let hlData     = {};  // symbol → fundingRate
+let edgexData  = {};  // symbol → {rate, contractId}
+let sortBy     = 'coin';
+let sortDir    = 1;
+let searchTerm = '';
+
+// ── EDGEX CONTRACT MAP (expandable) ─────────────────────
+const EDGEX_CONTRACTS = {
+  'BTC':  10000001,
+  'ETH':  10000002,
+  'SOL':  10000003,
+  'BNB':  10000004,
+  'XRP':  10000005,
+  'DOGE': 10000006,
+  'ADA':  10000007,
+  'AVAX': 10000008,
+  'LINK': 10000009,
+  'DOT':  10000010,
+  'LTC':  10000011,
+  'UNI':  10000012,
+  'ATOM': 10000013,
+  'ETC':  10000014,
+  'FIL':  10000015,
+};
+
+// ── STATUS HELPERS ───────────────────────────────────────
+function setStatus(exchange, state, text) {
+  const dot = document.getElementById('dot-' + exchange);
+  const label = document.getElementById('status-' + exchange);
+  dot.className = 'status-dot ' + state;
+  label.textContent = text;
+}
+
+// ── FETCH VDEX ───────────────────────────────────────────
+async function fetchVDEX() {
+  setStatus('vdex', 'loading', 'VDEX: yükleniyor...');
+  try {
+    const res = await fetch(`${VDEX_PROXY}/api/v1/public/funding/getFundingRatePage?page=1&size=100`);
+    const json = await res.json();
+    vdexData = {};
+    const list = json?.data?.dataList || [];
+    list.forEach(item => {
+      const sym = item.symbol?.replace('-USDT','').replace('USDT','').toUpperCase();
+      if (sym) vdexData[sym] = parseFloat(item.fundingRate) || 0;
+    });
+    setStatus('vdex', 'ok', `VDEX: ${list.length} coin`);
+    document.getElementById('stat-vdex').textContent = list.length;
+  } catch(e) {
+    setStatus('vdex', 'err', 'VDEX: hata');
+    console.error('VDEX error:', e);
+  }
+}
+
+// ── FETCH HYPERLIQUID ────────────────────────────────────
+async function fetchHL() {
+  setStatus('hl', 'loading', 'Hyperliquid: yükleniyor...');
+  try {
+    const res = await fetch(HL_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'metaAndAssetCtxs' })
+    });
+    const json = await res.json();
+    hlData = {};
+    const coins = json?.[0]?.universe || [];
+    const ctxs  = json?.[1] || [];
+    coins.forEach((c, i) => {
+      const sym = c.name?.toUpperCase();
+      const rate = parseFloat(ctxs[i]?.funding) || 0;
+      if (sym) hlData[sym] = rate;
+    });
+    setStatus('hl', 'ok', `Hyperliquid: ${coins.length} coin`);
+    document.getElementById('stat-hl').textContent = coins.length;
+  } catch(e) {
+    setStatus('hl', 'err', 'Hyperliquid: hata');
+    console.error('HL error:', e);
+  }
+}
+
+// ── FETCH EDGEX (toplu) ──────────────────────────────────
+async function fetchEdgex() {
+  setStatus('edgex', 'loading', 'Edgex: yükleniyor...');
+  try {
+    edgexData = {};
+    const symbols = Object.keys(EDGEX_CONTRACTS);
+    // Fetch all in parallel
+    await Promise.all(symbols.map(async sym => {
+      const contractId = EDGEX_CONTRACTS[sym];
+      try {
+        const res = await fetch(`${EDGEX_PROXY}/api/v1/public/funding/getFundingRatePage?contractId=${contractId}&page=1&size=1`);
+        const json = await res.json();
+        const item = json?.data?.dataList?.[0];
+        if (item) {
+          edgexData[sym] = parseFloat(item.fundingRate) || 0;
+        }
+      } catch(e) {
+        // skip this coin
+      }
+    }));
+    const count = Object.keys(edgexData).length;
+    setStatus('edgex', 'ok', `Edgex: ${count} coin`);
+    document.getElementById('stat-edgex').textContent = count;
+  } catch(e) {
+    setStatus('edgex', 'err', 'Edgex: hata');
+    console.error('Edgex error:', e);
+  }
+}
+
+// ── FORMAT RATE ──────────────────────────────────────────
+function fmtRate(val) {
+  if (val === null || val === undefined) return `<span class="rate-val na">N/A</span>`;
+  const pct = (val * 100).toFixed(4);
+  const cls = val > 0.00001 ? 'pos' : val < -0.00001 ? 'neg' : 'zero';
+  const sign = val > 0.00001 ? '+' : '';
+  return `<span class="rate-val ${cls}">${sign}${pct}%</span>`;
+}
+
+// ── RENDER TABLE ─────────────────────────────────────────
+function renderTable() {
+  const allSymbols = new Set([
+    ...Object.keys(hlData),
+    ...Object.keys(edgexData),
+    ...Object.keys(vdexData)
+  ]);
+
+  let rows = [...allSymbols].map(sym => ({
+    sym,
+    vdex:  vdexData[sym]  !== undefined ? vdexData[sym]  : null,
+    hl:    hlData[sym]    !== undefined ? hlData[sym]    : null,
+    edgex: edgexData[sym] !== undefined ? edgexData[sym] : null,
+  }));
+
+  // Filter
+  if (searchTerm) {
+    rows = rows.filter(r => r.sym.includes(searchTerm.toUpperCase()));
+  }
+
+  // Sort
+  rows.sort((a, b) => {
+    if (sortBy === 'coin') return sortDir * a.sym.localeCompare(b.sym);
+    const va = a[sortBy] ?? -Infinity;
+    const vb = b[sortBy] ?? -Infinity;
+    return sortDir * (vb - va);
+  });
+
+  const tbody = document.getElementById('table-body');
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state">Sonuç bulunamadı.</div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = rows.map((r, i) => {
+    // Find best exchange
+    const rates = { VDEX: r.vdex, HL: r.hl, Edgex: r.edgex };
+    const valid = Object.entries(rates).filter(([,v]) => v !== null);
+    let best = '';
+    if (valid.length > 0) {
+      const maxEntry = valid.reduce((a, b) => Math.abs(b[1]) > Math.abs(a[1]) ? b : a);
+      const colors = { VDEX: 'var(--vdex)', HL: 'var(--hl)', Edgex: 'var(--edgex)' };
+      best = `<span style="color:${colors[maxEntry[0]]};font-weight:700;font-size:11px">${maxEntry[0]}</span>`;
+    }
+
+    const initials = r.sym.slice(0,3);
+    return `<tr>
+      <td style="color:var(--text-dim);font-size:11px">${i+1}</td>
+      <td>
+        <div class="coin-cell">
+          <div class="coin-icon">${initials}</div>
+          ${r.sym}
+        </div>
+      </td>
+      <td class="ex-cell">${fmtRate(r.vdex)}</td>
+      <td class="ex-cell">${fmtRate(r.hl)}</td>
+      <td class="ex-cell">${fmtRate(r.edgex)}</td>
+      <td class="ex-cell">${best}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── SORT ─────────────────────────────────────────────────
+function setSort(field) {
+  if (sortBy === field) sortDir *= -1;
+  else { sortBy = field; sortDir = 1; }
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('sort-' + field);
+  if (btn) btn.classList.add('active');
+  renderTable();
+}
+
+// ── SEARCH ───────────────────────────────────────────────
+document.getElementById('search').addEventListener('input', e => {
+  searchTerm = e.target.value.trim();
+  renderTable();
+});
+
+// ── LOAD ALL ─────────────────────────────────────────────
+async function loadAll() {
+  const btn = document.getElementById('refresh-btn');
+  btn.disabled = true;
+  btn.textContent = '⟳ Yükleniyor...';
+
+  await Promise.all([fetchVDEX(), fetchHL(), fetchEdgex()]);
+  renderTable();
+
+  const now = new Date();
+  document.getElementById('last-update').textContent =
+    'Son güncelleme: ' + now.toLocaleTimeString('tr-TR');
+
+  btn.disabled = false;
+  btn.textContent = '⟳ Yenile';
+}
+
+// ── INIT ─────────────────────────────────────────────────
+loadAll();
+// Auto-refresh every 5 minutes
+setInterval(loadAll, 5 * 60 * 1000);
+</script>
+</body>
+</html>
