@@ -475,6 +475,7 @@
   <button class="sort-btn" id="sort-hl" onclick="setSort('hl')">HL Rate ↕</button>
   <button class="sort-btn" id="sort-edgex" onclick="setSort('edgex')">Edgex Rate ↕</button>
   <button class="sort-btn" id="sort-vdex" onclick="setSort('vdex')">VDEX Rate ↕</button>
+  <button class="sort-btn" id="sort-arb" onclick="setSort('arb')">Arbitraj ↕</button>
   <button class="refresh-btn" id="refresh-btn" onclick="loadAll()">⟳ Yenile</button>
 </div>
 
@@ -508,7 +509,7 @@
         <th class="ex-header" style="color:var(--vdex)">VDEX <span style="font-weight:400;text-transform:none;font-size:10px">(8h)</span></th>
         <th class="ex-header" style="color:var(--hl)">Hyperliquid <span style="font-weight:400;text-transform:none;font-size:10px">(1h)</span></th>
         <th class="ex-header" style="color:var(--edgex)">Edgex <span style="font-weight:400;text-transform:none;font-size:10px">(4h)</span></th>
-        <th class="ex-header">En Yüksek</th>
+        <th class="ex-header">Arbitraj Fırsatı</th>
       </tr>
     </thead>
     <tbody id="table-body">
@@ -655,12 +656,14 @@ function renderTable() {
     ...Object.keys(vdexData)
   ]);
 
-  let rows = [...allSymbols].map(sym => ({
-    sym,
-    vdex:  vdexData[sym]  !== undefined ? vdexData[sym]  : null,
-    hl:    hlData[sym]    !== undefined ? hlData[sym]    : null,
-    edgex: edgexData[sym] !== undefined ? edgexData[sym] : null,
-  }));
+  let rows = [...allSymbols].map(sym => {
+    const vdex  = vdexData[sym]  !== undefined ? vdexData[sym]  : null;
+    const hl    = hlData[sym]    !== undefined ? hlData[sym]    : null;
+    const edgex = edgexData[sym] !== undefined ? edgexData[sym] : null;
+    const vals = [vdex, hl, edgex].filter(v => v !== null);
+    const arb = vals.length >= 2 ? Math.max(...vals) - Math.min(...vals) : null;
+    return { sym, vdex, hl, edgex, arb };
+  });
 
   // Filter
   if (searchTerm) {
@@ -670,6 +673,11 @@ function renderTable() {
   // Sort
   rows.sort((a, b) => {
     if (sortBy === 'coin') return sortDir * a.sym.localeCompare(b.sym);
+    if (sortBy === 'arb') {
+      const va = a.arb ?? -Infinity;
+      const vb = b.arb ?? -Infinity;
+      return sortDir * (vb - va);
+    }
     const va = a[sortBy] ?? -Infinity;
     const vb = b[sortBy] ?? -Infinity;
     return sortDir * (vb - va);
@@ -682,14 +690,21 @@ function renderTable() {
   }
 
   tbody.innerHTML = rows.map((r, i) => {
-    // Find best exchange
-    const rates = { VDEX: r.vdex, HL: r.hl, Edgex: r.edgex };
-    const valid = Object.entries(rates).filter(([,v]) => v !== null);
-    let best = '';
-    if (valid.length > 0) {
-      const maxEntry = valid.reduce((a, b) => Math.abs(b[1]) > Math.abs(a[1]) ? b : a);
-      const colors = { VDEX: 'var(--vdex)', HL: 'var(--hl)', Edgex: 'var(--edgex)' };
-      best = `<span style="color:${colors[maxEntry[0]]};font-weight:700;font-size:11px">${maxEntry[0]}</span>`;
+    // Arbitrage: max - min of available rates (spread = long cheapest, short most expensive)
+    const vals = [r.vdex, r.hl, r.edgex].filter(v => v !== null);
+    let arbCell = `<span class="rate-val na">N/A</span>`;
+    if (vals.length >= 2) {
+      const maxVal = Math.max(...vals);
+      const minVal = Math.min(...vals);
+      const spread = maxVal - minVal;
+      const spreadPct = (spread * 100).toFixed(4);
+      // Color: gradient from green (high spread) to red (low/negative)
+      // spread is always >= 0 here, color by magnitude
+      let cls, label;
+      if (spread >= 0.0005) { cls = 'pos'; }       // ≥0.05% → yeşil
+      else if (spread >= 0.0001) { cls = 'zero'; } // ≥0.01% → nötr
+      else { cls = 'neg'; }                        // < 0.01% → kırmızı
+      arbCell = `<span class="rate-val ${cls}">+${spreadPct}%</span>`;
     }
 
     const initials = r.sym.slice(0,3);
@@ -704,7 +719,7 @@ function renderTable() {
       <td class="ex-cell">${fmtRate(r.vdex)}</td>
       <td class="ex-cell">${fmtRate(r.hl)}</td>
       <td class="ex-cell">${fmtRate(r.edgex)}</td>
-      <td class="ex-cell">${best}</td>
+      <td class="ex-cell">${arbCell}</td>
     </tr>`;
   }).join('');
 }
