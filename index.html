@@ -59,9 +59,7 @@
     font-size: 0.7em; font-weight: 600;
     color: #c084fc; margin-left: 8px;
   }
-  .powered-badge video {
-    width: 18px; height: 18px; border-radius: 4px; object-fit: cover;
-  }
+  .powered-badge video { width: 18px; height: 18px; border-radius: 4px; object-fit: cover; }
   .lang-switch {
     display: flex; background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
@@ -110,20 +108,15 @@
     width: 60px; height: 60px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.8em; font-weight: 800; color: white;
-    animation: float 4s ease-in-out infinite;
-    overflow: hidden;
+    animation: float 4s ease-in-out infinite; overflow: hidden;
   }
-  .dex-icon video {
-    width: 100%; height: 100%; object-fit: cover;
-  }
+  .dex-icon video { width: 100%; height: 100%; object-fit: cover; }
   .dex-icon.grvt { background: linear-gradient(135deg, #ff006e, #8338ec); animation-delay: 0s; }
   .dex-icon.hl { background: linear-gradient(135deg, #50d2c1, #066a78); animation-delay: 0.5s; }
   .dex-icon.var { background: linear-gradient(135deg, #f9d423, #ff4e50); animation-delay: 1s; }
   .dex-icon.vdex {
     background: linear-gradient(135deg, #1a0a2e, #3a0ca3);
-    animation-delay: 1.5s;
-    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
-    padding: 0;
+    animation-delay: 1.5s; box-shadow: 0 0 20px rgba(138, 43, 226, 0.6); padding: 0;
   }
   .dex-icon.lighter { background: linear-gradient(135deg, #fa709a, #fee140); animation-delay: 2s; }
   .dex-icon.dydx { background: linear-gradient(135deg, #6966ff, #2b2d72); animation-delay: 2.5s; }
@@ -162,10 +155,13 @@
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(138, 43, 226, 0.2);
   }
-  .nav-card.coming-soon { opacity: 0.85; }
-  .nav-card.coming-soon:hover {
+  .nav-card.dex-compare-card::before {
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 170, 0, 0.15) 0%, transparent 50%);
+  }
+  .nav-card.dex-compare-card:hover {
     border-color: rgba(255, 170, 0, 0.4);
     transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(255, 170, 0, 0.1);
   }
   .card-icon {
     font-size: 2.8em; margin-bottom: 18px; display: inline-block;
@@ -177,9 +173,7 @@
     animation: bob 3s ease-in-out infinite;
     box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
   }
-  .card-icon-video video {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-  }
+  .card-icon-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   @keyframes bob {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-5px) rotate(3deg); }
@@ -191,48 +185,89 @@
     color: #00d4ff; font-weight: 600; transition: gap 0.2s;
   }
   .nav-card.vdex-card .card-cta { color: #c084fc; }
-  .nav-card.active:hover .card-cta { gap: 14px; }
+  .nav-card.dex-compare-card .card-cta { color: #ffaa00; }
+  .nav-card.active:hover .card-cta,
+  .nav-card.dex-compare-card:hover .card-cta { gap: 14px; }
   .badge {
     display: inline-block; padding: 4px 10px; border-radius: 20px;
     font-size: 0.75em; font-weight: 600; text-transform: uppercase;
     margin-bottom: 15px; letter-spacing: 1px;
   }
-  .badge.live {
-    background: rgba(0, 255, 136, 0.15); color: #00ff88;
-    border: 1px solid rgba(0, 255, 136, 0.3);
+  .badge.live { background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.3); }
+  .badge.partner { background: rgba(138, 43, 226, 0.2); color: #c084fc; border: 1px solid rgba(138, 43, 226, 0.4); }
+  .badge.soon { background: rgba(255, 170, 0, 0.15); color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.3); }
+  .badge.live::before, .badge.partner::before { content: '●'; margin-right: 6px; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* ── DEX COMPARE SUBMENU ── */
+  .dex-submenu {
+    display: none;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
   }
-  .badge.partner {
-    background: rgba(138, 43, 226, 0.2); color: #c084fc;
-    border: 1px solid rgba(138, 43, 226, 0.4);
+  .dex-submenu.open { display: block; }
+
+  .submenu-label {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #71717a;
+    margin-bottom: 10px;
+    font-weight: 600;
   }
-  .badge.soon {
-    background: rgba(255, 170, 0, 0.15); color: #ffaa00;
-    border: 1px solid rgba(255, 170, 0, 0.3);
+
+  .submenu-items { display: flex; flex-direction: column; gap: 8px; }
+
+  .submenu-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: #e4e4e7;
+    transition: all 0.25s;
+    font-size: 0.95em;
   }
-  .badge.live::before, .badge.partner::before {
-    content: '●'; margin-right: 6px; animation: blink 1.5s infinite;
+  .submenu-item:hover {
+    background: rgba(255,170,0,0.08);
+    border-color: rgba(255,170,0,0.35);
+    transform: translateX(4px);
   }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+  .submenu-item-icon { font-size: 1.3em; flex-shrink: 0; }
+  .submenu-item-info { flex: 1; }
+  .submenu-item-title { font-weight: 600; margin-bottom: 2px; }
+  .submenu-item-desc { font-size: 0.8em; color: #71717a; }
+  .submenu-item-badge {
+    font-size: 0.7em; padding: 2px 8px; border-radius: 8px;
+    background: rgba(0,255,136,0.12); color: #00ff88;
+    border: 1px solid rgba(0,255,136,0.25);
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    flex-shrink: 0;
   }
-  .features {
-    max-width: 1100px; margin: 80px auto 40px; padding: 0 20px; text-align: center;
+  .submenu-item-badge.soon {
+    background: rgba(255,170,0,0.12); color: #ffaa00;
+    border-color: rgba(255,170,0,0.25);
   }
+
+  .chevron {
+    display: inline-block;
+    transition: transform 0.3s;
+    margin-left: 4px;
+    font-size: 0.8em;
+  }
+  .chevron.open { transform: rotate(180deg); }
+
+  /* features */
+  .features { max-width: 1100px; margin: 80px auto 40px; padding: 0 20px; text-align: center; }
   .features h2 { font-size: 1.8em; margin-bottom: 30px; color: #e4e4e7; }
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-  }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
   .feature {
     padding: 24px; background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; transition: all 0.3s;
   }
-  .feature:hover {
-    background: rgba(0, 212, 255, 0.04);
-    border-color: rgba(0, 212, 255, 0.2);
-  }
+  .feature:hover { background: rgba(0, 212, 255, 0.04); border-color: rgba(0, 212, 255, 0.2); }
   .feature-emoji { font-size: 2em; margin-bottom: 10px; }
   .feature-title { font-weight: 600; margin-bottom: 8px; }
   .feature-desc { font-size: 0.9em; color: #a1a1aa; }
@@ -244,9 +279,7 @@
     color: #c084fc; font-weight: 600; margin-top: 6px;
     display: inline-flex; align-items: center; gap: 8px;
   }
-  .footer-powered video {
-    width: 24px; height: 24px; border-radius: 4px; object-fit: cover;
-  }
+  .footer-powered video { width: 24px; height: 24px; border-radius: 4px; object-fit: cover; }
   @media (max-width: 600px) {
     header { padding: 20px; }
     .hero { padding: 30px 15px; }
@@ -311,16 +344,53 @@
       </span>
     </a>
 
-    <div class="nav-card coming-soon" onmousemove="moveLight(event, this)" onclick="comingSoonClick()">
-      <span class="badge soon" data-key="badge_soon">YAKINDA</span>
+    <!-- DEX KARŞILAŞTIRMALARI KARTI -->
+    <div class="nav-card dex-compare-card" onmousemove="moveLight(event, this)" onclick="toggleDexMenu(event)">
+      <span class="badge soon" data-key="badge_soon">GELİŞTİRİLİYOR</span>
       <div class="card-icon">⚖️</div>
       <h2 class="card-title" data-key="card3_title">DEX Karşılaştırmaları</h2>
-      <p class="card-desc" data-key="card3_desc">Hyperliquid, GRVT, Lighter ve diğerleri — funding rate'ler, hacim, listelenen tokenlar yan yana.</p>
-      <span class="card-cta" style="color: #ffaa00;">
-        <span data-key="card3_cta">Geliştiriliyor</span>
-        <span>⚡</span>
+      <p class="card-desc" data-key="card3_desc">Hyperliquid, VDEX, Edgex ve diğerleri — funding rate'ler, hacim, listelenen tokenlar yan yana.</p>
+      <span class="card-cta">
+        <span data-key="card3_cta">Karşılaştırmaları gör</span>
+        <span class="chevron" id="dex-chevron">▼</span>
       </span>
+
+      <!-- ALT MENÜ -->
+      <div class="dex-submenu" id="dex-submenu" onclick="event.stopPropagation()">
+        <div class="submenu-label">Karşılaştırma Araçları</div>
+        <div class="submenu-items">
+
+          <a href="funding.html" class="submenu-item">
+            <span class="submenu-item-icon">💸</span>
+            <div class="submenu-item-info">
+              <div class="submenu-item-title">Perp Funding Karşılaştırması</div>
+              <div class="submenu-item-desc">VDEX · Hyperliquid · Edgex — anlık funding rate & arbitraj</div>
+            </div>
+            <span class="submenu-item-badge">CANLI</span>
+          </a>
+
+          <div class="submenu-item" style="opacity:0.5; cursor:default;">
+            <span class="submenu-item-icon">📊</span>
+            <div class="submenu-item-info">
+              <div class="submenu-item-title">Hacim Karşılaştırması</div>
+              <div class="submenu-item-desc">DEX'ler arası 24s işlem hacmi</div>
+            </div>
+            <span class="submenu-item-badge soon">YAKINDA</span>
+          </div>
+
+          <div class="submenu-item" style="opacity:0.5; cursor:default;">
+            <span class="submenu-item-icon">🪙</span>
+            <div class="submenu-item-info">
+              <div class="submenu-item-title">Listelenen Tokenlar</div>
+              <div class="submenu-item-desc">Hangi DEX'te hangi coin var?</div>
+            </div>
+            <span class="submenu-item-badge soon">YAKINDA</span>
+          </div>
+
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -356,7 +426,7 @@
     <video src="vdex-logo.mp4" autoplay loop muted playsinline></video>
     Powered by VDEX • CoinGecko + VDEX API
   </p>
-  <p style="margin-top: 8px;">CryptoLens v3.1 • Made with 💜</p>
+  <p style="margin-top: 8px;">CryptoLens v3.2 • Made with 💜</p>
 </footer>
 
 <script>
@@ -364,7 +434,7 @@ const I18N = {
   tr: {
     hero_title: "Kripto Fırsat Tarayıcısı",
     hero_sub: "DEX'ler arası karşılaştırma, akıllı filtreler ve trader araçları — hepsi tek yerde.",
-    badge_live: "CANLI", badge_soon: "YAKINDA", badge_partner: "PARTNER • CANLI",
+    badge_live: "CANLI", badge_soon: "GELİŞTİRİLİYOR", badge_partner: "PARTNER • CANLI",
     card1_title: "Akıllı Filtreler",
     card1_desc: "Yükselenler, hacim patlamaları, mid-cap gemler. Birden fazla filtreyi birleştirip aradığın tokenı bul.",
     card1_cta: "Filtrelere git",
@@ -372,20 +442,19 @@ const I18N = {
     card2_desc: "VDEX trading pair'leri, leaderboard, yarışmalar, duyurular ve VMM performansı — anlık veriler.",
     card2_cta: "VDEX paneline git",
     card3_title: "DEX Karşılaştırmaları",
-    card3_desc: "Hyperliquid, GRVT, Lighter ve diğerleri — funding rate'ler, hacim, listelenen tokenlar yan yana.",
-    card3_cta: "Geliştiriliyor",
+    card3_desc: "Hyperliquid, VDEX, Edgex ve diğerleri — funding rate'ler, hacim, listelenen tokenlar yan yana.",
+    card3_cta: "Karşılaştırmaları gör",
     features_title: "Neler var?",
     feat1_title: "Anlık Veri", feat1_desc: "CoinGecko + VDEX API ile gerçek zamanlı",
     feat2_title: "Çoklu Filtre", feat2_desc: "Birden fazla kriteri birleştir",
     feat3_title: "Detaylı Grafik", feat3_desc: "24s'ten 1 yıla kadar fiyat geçmişi",
     feat4_title: "VDEX Leaderboard", feat4_desc: "En iyi trader'lar ve yarışmalar",
     disclaimer: "⚠️ Yatırım tavsiyesi değildir. Kendi araştırmanı yap (DYOR).",
-    soon_alert: "Bu özellik yakında eklenecek!"
   },
   en: {
     hero_title: "Crypto Opportunity Scanner",
     hero_sub: "DEX comparisons, smart filters and trader tools — all in one place.",
-    badge_live: "LIVE", badge_soon: "SOON", badge_partner: "PARTNER • LIVE",
+    badge_live: "LIVE", badge_soon: "IN DEVELOPMENT", badge_partner: "PARTNER • LIVE",
     card1_title: "Smart Filters",
     card1_desc: "Pumping coins, volume spikes, mid-cap gems. Combine multiple filters to find the token you want.",
     card1_cta: "Open filters",
@@ -393,15 +462,14 @@ const I18N = {
     card2_desc: "VDEX trading pairs, leaderboard, competitions, announcements and VMM performance — live data.",
     card2_cta: "Open VDEX panel",
     card3_title: "DEX Comparisons",
-    card3_desc: "Hyperliquid, GRVT, Lighter and others — funding rates, volume, listed tokens side by side.",
-    card3_cta: "In development",
+    card3_desc: "Hyperliquid, VDEX, Edgex and others — funding rates, volume, listed tokens side by side.",
+    card3_cta: "View comparisons",
     features_title: "What's inside?",
     feat1_title: "Live Data", feat1_desc: "Real-time via CoinGecko + VDEX API",
     feat2_title: "Multi-Filter", feat2_desc: "Stack multiple criteria",
     feat3_title: "Detailed Charts", feat3_desc: "24h to 1Y price history",
     feat4_title: "VDEX Leaderboard", feat4_desc: "Top traders and competitions",
     disclaimer: "⚠️ Not financial advice. Do your own research (DYOR).",
-    soon_alert: "This feature is coming soon!"
   }
 };
 
@@ -417,6 +485,15 @@ const DEXES = [
 ];
 
 let currentLang = 'tr';
+let dexMenuOpen = false;
+
+function toggleDexMenu(e) {
+  dexMenuOpen = !dexMenuOpen;
+  const menu = document.getElementById('dex-submenu');
+  const chevron = document.getElementById('dex-chevron');
+  menu.classList.toggle('open', dexMenuOpen);
+  chevron.classList.toggle('open', dexMenuOpen);
+}
 
 function setLang(lang) {
   currentLang = lang;
@@ -429,10 +506,6 @@ function setLang(lang) {
     if (tr[el.dataset.key]) el.textContent = tr[el.dataset.key];
   });
   try { localStorage.setItem('cryptolens_lang', lang); } catch(e) {}
-}
-
-function comingSoonClick() {
-  alert(I18N[currentLang].soon_alert);
 }
 
 function moveLight(e, el) {
