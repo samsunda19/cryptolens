@@ -583,19 +583,23 @@ function setStatus(exchange, state, text) {
 async function fetchVDEX() {
   setStatus('vdex', 'loading', 'VDEX: yükleniyor...');
   try {
-    const res = await fetch(`${VDEX_PROXY}/api/v1/public/funding/getFundingRatePage?page=1&size=200`);
+    const path = 'v2/tokens/supported-pairs?chainId=1';
+    const res = await fetch(`${VDEX_PROXY}/?path=${encodeURIComponent(path)}`);
     const json = await res.json();
     vdexData = {};
-    const list = json?.data?.dataList || json?.data || [];
+    const list = json?.data || [];
     list.forEach(item => {
-      let sym = item.symbol || item.contractName || item.name || '';
-      sym = sym.replace(/-USDT$/i,'').replace(/USDT$/i,'').replace(/-USD$/i,'').toUpperCase().trim();
-      if (sym) vdexData[sym] = parseFloat(item.fundingRate) || 0;
+      if (item.isDisabled) return;
+      const sym = (item.baseToken || '').toUpperCase().trim();
+      const rate = item.fundingRate;
+      if (sym && rate !== null && rate !== undefined) {
+        vdexData[sym] = parseFloat(rate) || 0;
+      }
     });
     const count = Object.keys(vdexData).length;
     setStatus('vdex', 'ok', `VDEX: ${count} coin`);
     document.getElementById('stat-vdex').textContent = count;
-    if (count === 0) console.warn('VDEX boş geldi, response:', JSON.stringify(json).slice(0, 400));
+    if (count === 0) console.warn('VDEX fundingRate hepsi null. İlk item:', JSON.stringify(list[0]));
   } catch(e) {
     setStatus('vdex', 'err', 'VDEX: hata');
     console.error('VDEX error:', e);
