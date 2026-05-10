@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edgex API Test</title>
+<style>
+  body { font-family: monospace; background: #0a0a1a; color: #e4e4e7; padding: 20px; }
+  pre { background: #1a1a2e; padding: 15px; border-radius: 8px; overflow: auto; max-height: 400px; font-size: 12px; }
+  h2 { color: #00d4ff; }
+  h3 { color: #c084fc; margin-top: 30px; }
+  .ok { color: #00ff88; }
+  .err { color: #ff4466; }
+  .warn { color: #ffaa00; }
+  button { background: #00d4ff; color: #0a0a1a; border: none; padding: 10px 20px; font-weight: 700; border-radius: 6px; cursor: pointer; margin: 5px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+  th, td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
+  th { color: #c084fc; }
+</style>
+</head>
+<body>
+<h1>🧪 Edgex API Testi</h1>
+
+<button onclick="test1()">Test 1: BTC Funding Rate</button>
+<button onclick="test2()">Test 2: Tüm Contractler (getMetaData)</button>
+<button onclick="test3()">Test 3: Tüm Funding Rate'ler</button>
+
+<div id="result"></div>
+
+<script>
+const BASE = 'https://pro.edgex.exchange/api/v1';
+
+async function test1() {
+  const r = document.getElementById('result');
+  r.innerHTML = '<h3>⏳ BTC funding rate çekiliyor...</h3>';
+
+  try {
+    const url = `${BASE}/public/funding/getFundingRatePage?filterSettlementFundingRate=true&contractId=10000001&size=1`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      r.innerHTML = `<p class="err">❌ HTTP ${response.status}</p>`;
+      return;
+    }
+
+    const data = await response.json();
+    let html = '<h2 class="ok">✅ BTC Çalışıyor!</h2>';
+    html += `<p>Status: ${data.code}</p>`;
+
+    if (data.data && data.data.dataList && data.data.dataList.length > 0) {
+      const fr = data.data.dataList[0];
+      const rate = parseFloat(fr.fundingRate) * 100;
+      const interval = parseInt(fr.fundingRateIntervalMin); // dakika
+      const dailyMultiplier = (24 * 60) / interval;
+      const annual = rate * dailyMultiplier * 365;
+
+      html += `<table>
+        <tr><td><strong>Fiyat (Mark):</strong></td><td>$${parseFloat(fr.markPrice).toLocaleString()}</td></tr>
+        <tr><td><strong>Funding Rate (4h):</strong></td><td class="${rate >= 0 ? 'ok' : 'err'}">${rate.toFixed(4)}%</td></tr>
+        <tr><td><strong>Annual:</strong></td><td class="${annual >= 0 ? 'ok' : 'err'}">${annual.toFixed(2)}%</td></tr>
+        <tr><td><strong>Interval:</strong></td><td>${interval} dakika (${interval/60}h)</td></tr>
+      </table>`;
+    }
+
+    html += `<h3>Ham Veri:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+    r.innerHTML = html;
+  } catch (e) {
+    r.innerHTML = `<p class="err">❌ Hata: ${e.message}</p>
+                   <p class="warn">⚠️ Bu CORS hatası olabilir, browser'ın direkt erişimi engellenmiş demektir.</p>`;
+  }
+}
+
+async function test2() {
+  const r = document.getElementById('result');
+  r.innerHTML = '<h3>⏳ Tüm contractler çekiliyor...</h3>';
+
+  // Birkaç olası endpoint deniyoruz
+  const endpoints = [
+    `${BASE}/public/meta/getMetaData`,
+    `${BASE}/public/contract/getContractList`,
+    `${BASE}/public/quote/getMarketList`,
+    `${BASE}/public/instrument/getAllInstruments`
+  ];
+
+  let html = '<h2>🔍 Olası endpoint\'leri deniyoruz:</h2>';
+
+  for (const url of endpoints) {
+    try {
+      const response = await fetch(url);
+      const status = response.status;
+      let preview = '';
+      if (response.ok) {
+        const data = await response.json();
+        preview = JSON.stringify(data).substring(0, 200);
+        html += `<p class="ok">✅ ${url.replace(BASE, '')} → ${status}</p>`;
+        html += `<pre>${preview}...</pre>`;
+      } else {
+        html += `<p class="err">❌ ${url.replace(BASE, '')} → ${status}</p>`;
+      }
+    } catch (e) {
+      html += `<p class="err">❌ ${url.replace(BASE, '')} → ${e.message}</p>`;
+    }
+  }
+
+  r.innerHTML = html;
+}
+
+async function test3() {
+  const r = document.getElementById('result');
+  r.innerHTML = '<h3>⏳ Yaygın contract ID\'leri için funding rate\'ler çekiliyor...</h3>';
+
+  // Tahmin edilen contract ID'ler (BTC=10000001 modeline göre)
+  const ids = [
+    {id: '10000001', name: 'BTC'},
+    {id: '10000002', name: 'ETH'},
+    {id: '10000003', name: 'SOL'},
+    {id: '10000004', name: 'AVAX'},
+    {id: '10000005', name: 'BNB'},
+    {id: '10000006', name: 'XRP'},
+    {id: '10000007', name: 'DOGE'},
+    {id: '10000008', name: 'MATIC'},
+    {id: '10000009', name: '?'},
+    {id: '10000010', name: '?'}
+  ];
+
+  let html = '<h2>🔍 Tahmin edilen contract ID\'leri:</h2><table><tr><th>ID</th><th>Tahmin</th><th>Fiyat</th><th>Funding (4h)</th><th>Annual</th></tr>';
+
+  for (const item of ids) {
+    try {
+      const url = `${BASE}/public/funding/getFundingRatePage?filterSettlementFundingRate=true&contractId=${item.id}&size=1`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        html += `<tr><td>${item.id}</td><td>${item.name}</td><td colspan="3" class="err">HTTP ${response.status}</td></tr>`;
+        continue;
+      }
+      const data = await response.json();
+      if (data.data && data.data.dataList && data.data.dataList.length > 0) {
+        const fr = data.data.dataList[0];
+        const rate = parseFloat(fr.fundingRate) * 100;
+        const interval = parseInt(fr.fundingRateIntervalMin);
+        const annual = rate * ((24*60)/interval) * 365;
+        html += `<tr>
+          <td>${item.id}</td>
+          <td>${item.name}</td>
+          <td>$${parseFloat(fr.markPrice).toLocaleString()}</td>
+          <td class="${rate >= 0 ? 'ok' : 'err'}">${rate.toFixed(4)}%</td>
+          <td class="${annual >= 0 ? 'ok' : 'err'}">${annual.toFixed(2)}%</td>
+        </tr>`;
+      } else {
+        html += `<tr><td>${item.id}</td><td>${item.name}</td><td colspan="3" class="warn">Veri yok</td></tr>`;
+      }
+    } catch (e) {
+      html += `<tr><td>${item.id}</td><td>${item.name}</td><td colspan="3" class="err">${e.message}</td></tr>`;
+    }
+  }
+
+  html += '</table>';
+  r.innerHTML = html;
+}
+</script>
+</body>
+</html>
